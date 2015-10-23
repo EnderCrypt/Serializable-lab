@@ -1,5 +1,7 @@
 package com.github.serializable.collection.file;
 
+import java.io.File;
+
 import com.github.serializable.collection.ProductRepository;
 
 /**
@@ -7,10 +9,19 @@ import com.github.serializable.collection.ProductRepository;
  */
 public class FileProductRepository implements ProductRepository
 {
-
-	public FileProductRepository()
+	private File saveDirectory; 
+	public FileProductRepository(String directory)
 	{
-		// TODO Auto-generated constructor stub
+		// init variables
+		saveDirectory = new File(directory);
+		// create directory
+		if (!saveDirectory.exists())
+		{
+			if (!saveDirectory.mkdirs()) // for example sending in the directory "#€&&()&=" into the constructor fails to create a dir
+			{
+				throw new RuntimeException("Failed to create directory");
+			}
+		}
 	}
 
 	@Override
