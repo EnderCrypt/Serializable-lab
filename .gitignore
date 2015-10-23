@@ -1,3 +1,6 @@
+# github automatically ignored files
+
+# eclipse related
 .classpath
 .project
 .settings
