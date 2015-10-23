@@ -2,6 +2,9 @@ package com.github.serializable.collection.file;
 
 import com.github.serializable.collection.OrderRepository;
 
+/**
+ * handles order objects by saving/loading them to files using serialization
+ */
 public class FileOrderRepository implements OrderRepository
 {
 
