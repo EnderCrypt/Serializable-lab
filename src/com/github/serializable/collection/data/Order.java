@@ -8,7 +8,8 @@ import java.io.Serializable;
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
-	
+	// public Order(List<Product> products, User user)
+	// public Order(Product product, User user)
 	public Order()
 	{
 		// TODO Auto-generated constructor stub
