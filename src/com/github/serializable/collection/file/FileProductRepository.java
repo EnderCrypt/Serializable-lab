@@ -1,8 +1,11 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Set;
 import java.util.HashSet;
@@ -51,9 +54,16 @@ public class FileProductRepository implements ProductRepository
 	}
 
 	@Override
-	public void readProduct(Product product)
+	public void readProduct() throws FileNotFoundException, IOException, ClassNotFoundException, ClassCastException
 	{
-		// TODO Auto-generated method stub
+		if (productSet.size() > 0)
+		{
+			throw new RuntimeException("Data has already been read");
+		}
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
+		{
+			productSet = (Set<Product>) ois.readObject();
+		}
 		
 	}
 

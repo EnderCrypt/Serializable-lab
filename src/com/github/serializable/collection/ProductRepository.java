@@ -1,5 +1,8 @@
 package com.github.serializable.collection;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import com.github.serializable.collection.data.Product;
 
 /**
@@ -9,7 +12,7 @@ public interface ProductRepository
 {
 	public void createProduct(Product product);
 	public void updateProduct(Product product);
-	public void readProduct(Product product);
+	public void readProduct() throws FileNotFoundException, IOException, ClassNotFoundException;
 	public void deleteProduct(Product product);
 	public void requestSave();
 }
