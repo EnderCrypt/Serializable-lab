@@ -52,7 +52,7 @@ public class FileProductRepository implements ProductRepository
 	}
 
 	@Override
-	public void readProduct(Product product) throws FileNotFoundException, IOException, ClassNotFoundException, ClassCastException
+	public void readProduct() throws FileNotFoundException, IOException, ClassNotFoundException, ClassCastException
 	{
 		if (productSet.size() > 0)
 		{

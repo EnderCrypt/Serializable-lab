@@ -12,7 +12,7 @@ public interface ProductRepository
 {
 	public void createProduct(Product product);
 	public void updateProduct(Product product);
-	public void readProduct(Product product) throws FileNotFoundException, IOException, ClassNotFoundException;
+	public void readProduct() throws FileNotFoundException, IOException, ClassNotFoundException;
 	public void deleteProduct(Product product);
 	public void requestSave();
 }
