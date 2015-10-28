@@ -13,16 +13,18 @@ public class Order implements Serializable
 	private User user;
 	private Product product;
 	
-	public Order(List<Product> products, User user)
+	public Order()
 	{
-		this.products = products;
-		this.user = user;
+		
 	}
-	
-	public Order(Product product, User user)
+	public Order add(List<Product> list)
 	{
-		this.product = product;
-		this.user = user;
+		products.addAll(list);
+		return this;
 	}
-
+	public Order add(Product prod)
+	{
+		products.add(prod);
+		return this;
+	}
 }
