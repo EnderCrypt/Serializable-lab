@@ -19,11 +19,13 @@ import com.github.serializable.collection.data.User;
 public class FileUserRepository implements UserRepository
 {
 	private File saveDirectory; 
+	private File saveFile;
 	private Set<User> userSet = new HashSet<User>();
-	public FileUserRepository(String directory)
+	public FileUserRepository(String directory) throws IOException
 	{
 		// init variables
 		saveDirectory = new File(directory);
+		saveFile = new File(directory+"/data");
 		// create directory
 		if (!saveDirectory.exists())
 		{
@@ -31,6 +33,10 @@ public class FileUserRepository implements UserRepository
 			{
 				throw new RuntimeException("Failed to create directory");
 			}
+		}
+		if(saveFile.createNewFile())
+		{
+			requestSave();
 		}
 	}
 
@@ -65,7 +71,7 @@ public class FileUserRepository implements UserRepository
 		{
 			throw new RuntimeException("Data has already been read");
 		}
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile)))
 		{
 			userSet = (Set<User>) ois.readObject();
 		}
@@ -105,10 +111,9 @@ public class FileUserRepository implements UserRepository
 	@Override
 	public void requestSave()
 	{
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory+"data")))
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveFile)))
 		{
 			out.writeObject(userSet);
-			out.close();
 		} 
 		catch(IOException e)
 		{
