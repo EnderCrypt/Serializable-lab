@@ -10,15 +10,21 @@ public class ECommerceService
 	ProductRepository productRepository;
 	OrderRepository orderRepository;
 	
-	int orderIdCounter = 0;
-	int productIdCounter = 0;
-	int userIdCounter = 0;
-	
 	public ECommerceService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository)
 	{
 		this.userRepository = userRepository;
 		this.productRepository = productRepository;
 		this.orderRepository = orderRepository;
-		
+		loadData();
+	}
+	private void loadData()
+	{
+		productRepository.readAll();
+		orderRepository.readAll();
+		userRepository.readAll();
+		//TODO: remove sysout
+		System.out.println(productRepository);
+		System.out.println(orderRepository);
+		System.out.println(userRepository);
 	}
 }

@@ -19,8 +19,9 @@ import com.github.serializable.collection.data.Product;
 public class FileProductRepository implements ProductRepository
 {
 	private File saveDirectory; 
+	private File saveFile;
 	private Set<Product> productSet = new HashSet<Product>();
-	public FileProductRepository(String directory)
+	public FileProductRepository(String directory) throws IOException
 	{
 		// init variables
 		saveDirectory = new File(directory);
@@ -31,6 +32,11 @@ public class FileProductRepository implements ProductRepository
 			{
 				throw new RuntimeException("Failed to create directory");
 			}
+		}
+		saveFile = new File(saveDirectory+"/data");
+		if (saveFile.createNewFile())
+		{
+			requestSave();
 		}
 	}
 
@@ -64,7 +70,7 @@ public class FileProductRepository implements ProductRepository
 		{
 			throw new RuntimeException("Data has already been read");
 		}
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"/data")))
 		{
 			productSet = (Set<Product>) ois.readObject();
 		}
