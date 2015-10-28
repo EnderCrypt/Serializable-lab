@@ -12,11 +12,11 @@ public class User implements Serializable
 	private String password;
 	private String email;
 
-	public User(String username, String password, String eMail)
+	public User(String username, String password, String email)
 	{
 		this.username = username;
 		this.password = password;
-		this.email = eMail;
+		this.email = email;
 	}
 
 	public String getUsername()

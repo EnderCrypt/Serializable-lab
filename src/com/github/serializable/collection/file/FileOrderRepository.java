@@ -1,6 +1,9 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -59,7 +62,14 @@ public class FileOrderRepository implements OrderRepository
 	@Override
 	public void requestSave()
 	{
-		// TODO Auto-generated method stub
-		
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory)))
+		{
+			out.writeObject(orderSet);
+		}
+		catch(IOException e)
+		{
+			e.getMessage();
+			e.printStackTrace();
+		}
 	}
 }

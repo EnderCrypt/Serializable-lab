@@ -42,18 +42,26 @@ public class Product implements Serializable
 		//int result = 1;
 		//result = prime * result + productID;
 		//return result;
-		return productID;
+		return productID * 37;
 	}
 
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
-		Product other = (Product) obj;
-		if (productID != other.productID) return false;
-		return true;
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (obj instanceof Product) 
+		{
+			Product otherProduct = (Product) obj;
+			return this.productID == otherProduct.getProductID();
+		}
+		return false;
 	}
 
 }
