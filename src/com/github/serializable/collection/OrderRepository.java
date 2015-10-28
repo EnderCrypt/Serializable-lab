@@ -1,12 +1,15 @@
 package com.github.serializable.collection;
 
+import com.github.serializable.collection.data.Order;
+
 /**
  * this interface allows you to change how ECommerce saves your order objects, by for example file serialization or database
  */
 public interface OrderRepository
 {
-	public void createOrder();
-	public void updateOrder();
-	public void readOrder();
-	public void deleteOrder();
+	public void createOrder(Order order);
+	public void updateOrder(Order order);
+	public void readOrder(Order order);
+	public void deleteOrder(Order order);
+	public void requestSave();
 }

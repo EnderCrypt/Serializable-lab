@@ -1,12 +1,15 @@
 package com.github.serializable.collection;
 
+import com.github.serializable.collection.data.User;
+
 /**
  * this interface allows you to change how ECommerce saves your user objects, by for example file serialization or database
  */
 public interface UserRepository
 {
-	public void createUser();
-	public void updateUser();
-	public void readUser();
-	public void deleteUser();
+	public void createUser(User user);
+	public void updateUser(User user);
+	public void readUser(User user);
+	public void deleteUser(User user);
+	public void requestSave();
 }

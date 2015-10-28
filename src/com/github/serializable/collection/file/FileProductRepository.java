@@ -3,6 +3,7 @@ package com.github.serializable.collection.file;
 import java.io.File;
 
 import com.github.serializable.collection.ProductRepository;
+import com.github.serializable.collection.data.Product;
 
 /**
  * handles product objects by saving/loading them to files using serialization
@@ -25,28 +26,35 @@ public class FileProductRepository implements ProductRepository
 	}
 
 	@Override
-	public void createProduct()
+	public void createProduct(Product product)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateProduct()
+	public void updateProduct(Product product)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void readProduct()
+	public void readProduct(Product product)
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void deleteProduct()
+	public void deleteProduct(Product product)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void requestSave() 
 	{
 		// TODO Auto-generated method stub
 		
