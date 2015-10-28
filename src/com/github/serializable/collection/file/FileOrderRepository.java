@@ -76,7 +76,7 @@ public class FileOrderRepository implements OrderRepository
 		}
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile)))
 		{
-			orderSet = (Set<Order>) ois.readObject();
+			orderSet = (Set<Order>) ois.readObject(); //reads whole set as object
 		}
 
 		// Catch
@@ -122,5 +122,10 @@ public class FileOrderRepository implements OrderRepository
 			e.getMessage();
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public String toString()
+	{
+		return orderSet.toString();
 	}
 }

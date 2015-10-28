@@ -121,5 +121,11 @@ public class FileUserRepository implements UserRepository
 			e.printStackTrace();		
 		}
 	}
+	
+	@Override
+	public String toString()
+	{
+		return userSet.toString();
+	}
 
 }

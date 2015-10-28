@@ -122,5 +122,11 @@ public class FileProductRepository implements ProductRepository
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public String toString()
+	{
+		return productSet.toString();
+	}
 
 }

@@ -15,9 +15,9 @@ public class Order implements Serializable
 	private Product product;
 	private int orderId;
 	
-	public Order()
+	public Order(int id)
 	{
-		
+		orderId = id;
 	}
 	public Order add(List<Product> list)
 	{
@@ -39,10 +39,28 @@ public class Order implements Serializable
 	{
 		return orderId * 37;
 	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj)
+		{
+			return true;
+		}
+		if(obj == null)
+		{
+			return false;
+		}
+		if(obj instanceof Order)
+		{
+			Order otherOrder = (Order) obj;
+			return this.getOrderId() == otherOrder.getOrderId();
+		}
+		return false;
+	}
 	
 	@Override
 	public String toString()
 	{
-		return ""+ orderId;
+		return orderId + ":"; //TODO: make toString print list of products if list is not null, or single product if product is not null
 	}
 }
