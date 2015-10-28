@@ -1,8 +1,11 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,30 +38,70 @@ public class FileOrderRepository implements OrderRepository
 	@Override
 	public void createOrder(Order order)
 	{
-		
-		
+		if(!orderSet.add(order))
+		{
+			throw new RuntimeException("Could not add order: " + order.toString());
+		}
 	}
 
 	@Override
 	public void updateOrder(Order order)
 	{
-		// TODO Auto-generated method stub
+		if(orderSet.contains(order))
+		{
+			orderSet.remove(order);
+			orderSet.add(order);
+		}
+		else
+		{
+			throw new RuntimeException("Order set does not contain specific order! " + order.toString());
+		}
 		
 	}
 
 	@Override
-	public void readOrder(Order order)
+	public void readAll()
 	{
-		// TODO Auto-generated method stub
+		if(orderSet.size() > 0)
+		{
+			throw new RuntimeException("Data has already been read");
+		}
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
+		{
+			orderSet = (Set<Order>) ois.readObject();
+		}
 		
+		//Catch
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void deleteOrder(Order order)
 	{
-		// TODO Auto-generated method stub
-		
+		if(orderSet.contains(order))
+		{
+			if(!orderSet.remove(order))
+			{
+				throw new RuntimeException("Could not remove order! Make sure order already exists.");
+			}
+		}
+		else
+		{
+			throw new RuntimeException("Order set does not contain specific order!");
+		}
 	}
+	
 	@Override
 	public void requestSave()
 	{

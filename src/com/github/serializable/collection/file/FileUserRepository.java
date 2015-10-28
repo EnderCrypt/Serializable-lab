@@ -1,8 +1,11 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,8 +18,8 @@ import com.github.serializable.collection.data.User;
  */
 public class FileUserRepository implements UserRepository
 {
-	private Set<User> userSet = new HashSet<User>();
 	private File saveDirectory; 
+	private Set<User> userSet = new HashSet<User>();
 	public FileUserRepository(String directory)
 	{
 		// init variables
@@ -51,14 +54,35 @@ public class FileUserRepository implements UserRepository
 		}
 		else
 		{
-			throw new RuntimeException("The repository does not contain user: " + user.toString());
+			throw new RuntimeException("User set does not contain specific user!: " + user.toString());
 		}
 	}
 
 	@Override
-	public Set<User> readUser()
+	public void readAll()
 	{
-		return new HashSet<>(userSet);
+		if (userSet.size() > 0)
+		{
+			throw new RuntimeException("Data has already been read");
+		}
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
+		{
+			userSet = (Set<User>) ois.readObject();
+		}
+		
+		//Catch
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -71,15 +95,20 @@ public class FileUserRepository implements UserRepository
 				throw new RuntimeException("Could not remove user! Make sure user already exists.");
 			}
 		}
+		else
+		{
+			throw new RuntimeException("User set does not contain specific user!");
+		}
 		
 	}
 	
 	@Override
 	public void requestSave()
 	{
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory)))
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory+"data")))
 		{
 			out.writeObject(userSet);
+			out.close();
 		} 
 		catch(IOException e)
 		{

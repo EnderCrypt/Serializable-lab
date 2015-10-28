@@ -9,7 +9,7 @@ public interface OrderRepository
 {
 	public void createOrder(Order order);
 	public void updateOrder(Order order);
-	public void readOrder(Order order);
+	public void readAll();
 	public void deleteOrder(Order order);
 	public void requestSave();
 }

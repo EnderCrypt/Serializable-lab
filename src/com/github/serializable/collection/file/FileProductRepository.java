@@ -51,10 +51,14 @@ public class FileProductRepository implements ProductRepository
 			productSet.remove(product);
 			productSet.add(product);
 		}
+		else
+		{
+			throw new RuntimeException("Product set does not contain specific product! " + product.toString());
+		}
 	}
 
 	@Override
-	public void readProduct() throws FileNotFoundException, IOException, ClassNotFoundException, ClassCastException
+	public void readAll()
 	{
 		if (productSet.size() > 0)
 		{
@@ -63,6 +67,20 @@ public class FileProductRepository implements ProductRepository
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
 		{
 			productSet = (Set<Product>) ois.readObject();
+		}
+		
+		//Catch
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 		
 	}
@@ -77,18 +95,21 @@ public class FileProductRepository implements ProductRepository
 				throw new RuntimeException("Could not remove product: " + product.toString());
 			}
 		}
+		else
+		{
+			throw new RuntimeException("Product set does not contain specified product!");
+		}
 	}
 	
 	@Override
-	public void requestSave() 
+	public void requestSave()
 	{
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory)))
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory+"data")))
 		{
 			out.writeObject(productSet);
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
-			e.getMessage();
 			e.printStackTrace();
 		}
 	}
