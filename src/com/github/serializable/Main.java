@@ -14,6 +14,9 @@ public class Main
 		FileUserRepository userRep = new FileUserRepository("Repository/User/");
 		FileOrderRepository orderRep = new FileOrderRepository("Repository/Order/");
 		FileProductRepository productRep = new FileProductRepository("Repository/Product/");
+		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
+		
+		
 		/*
 		 *TODO: 
 		 *- fill datamembers (Order, Product, User, etc.) with relevant info (incl. hashCode&equals)
@@ -38,8 +41,6 @@ public class Main
 //		productRep.createProduct(energyDrink);
 
 //		orderRep.createOrder(productRep);
-		
-//		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
 	}
 
 }

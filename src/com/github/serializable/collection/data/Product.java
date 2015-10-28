@@ -9,9 +9,17 @@ public class Product implements Serializable
 {
 	private static final long serialVersionUID = 525630403812799901L;
 	
-	public Product()
+	private String name;
+	private int productID;
+	
+	public Product(String name, int productID)
 	{
-		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.productID = productID;
+	}
+	public String toString()
+	{
+		return "Product: "+name+" ("+productID+")";
 	}
 
 }
