@@ -1,6 +1,7 @@
 package com.github.serializable.collection.data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * this is the public order object that will be saved/loaded by the application
@@ -8,11 +9,20 @@ import java.io.Serializable;
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
-	// public Order(List<Product> products, User user)
-	// public Order(Product product, User user)
-	public Order()
+	private  List<Product> products;
+	private  User user;
+	private Product product;
+	
+	public Order(List<Product> products, User user)
 	{
-		// TODO Auto-generated constructor stub
+		this.products = products;
+		this.user = user;
+	}
+	
+	public Order(Product product, User user)
+	{
+		this.product = product;
+		this.user = user;
 	}
 
 }
