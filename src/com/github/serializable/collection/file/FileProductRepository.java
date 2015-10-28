@@ -26,11 +26,7 @@ public class FileProductRepository implements ProductRepository
 	{
 		// init variables
 		saveDirectory = new File(directory);
-<<<<<<< HEAD
 		saveFile = new File(saveDirectory + "/data");
-=======
-		saveFile = new File(saveDirectory+"/data");
->>>>>>> 9df5a9fba9cb404e0bab8723727fd14e1f84e38f
 		// create directory
 		if (!saveDirectory.exists())
 		{
