@@ -25,6 +25,7 @@ public class FileProductRepository implements ProductRepository
 	{
 		// init variables
 		saveDirectory = new File(directory);
+		saveFile = new File(saveDirectory+"/data");
 		// create directory
 		if (!saveDirectory.exists())
 		{
@@ -33,7 +34,6 @@ public class FileProductRepository implements ProductRepository
 				throw new RuntimeException("Failed to create directory");
 			}
 		}
-		saveFile = new File(saveDirectory+"/data");
 		if (saveFile.createNewFile())
 		{
 			requestSave();
