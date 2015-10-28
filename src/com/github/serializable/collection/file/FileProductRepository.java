@@ -1,6 +1,8 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.util.Set;
+import java.util.HashSet;
 
 import com.github.serializable.collection.ProductRepository;
 import com.github.serializable.collection.data.Product;
@@ -11,6 +13,7 @@ import com.github.serializable.collection.data.Product;
 public class FileProductRepository implements ProductRepository
 {
 	private File saveDirectory; 
+	private Set<Product> productSet = new HashSet<Product>();
 	public FileProductRepository(String directory)
 	{
 		// init variables
@@ -28,15 +31,20 @@ public class FileProductRepository implements ProductRepository
 	@Override
 	public void createProduct(Product product)
 	{
-		// TODO Auto-generated method stub
-		
+		if(!productSet.add(product))
+		{
+			throw new RuntimeException("Could not add product: " + product.toString());
+		}
 	}
 
 	@Override
 	public void updateProduct(Product product)
 	{
-		// TODO Auto-generated method stub
-		
+		if(productSet.contains(product))
+		{
+			productSet.remove(product);
+			productSet.add(product);
+		}
 	}
 
 	@Override
@@ -49,8 +57,13 @@ public class FileProductRepository implements ProductRepository
 	@Override
 	public void deleteProduct(Product product)
 	{
-		// TODO Auto-generated method stub
-		
+		if(productSet.contains(product))
+		{
+			if(!productSet.remove(product))
+			{
+				throw new RuntimeException("Could not remove product: " + product.toString());
+			}
+		}
 	}
 	
 	@Override

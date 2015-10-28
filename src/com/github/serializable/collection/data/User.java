@@ -10,13 +10,13 @@ public class User implements Serializable
 	private static final long serialVersionUID = -4836684853320153893L;
 	private String username;
 	private String password;
-	private String eMail;
+	private String email;
 
 	public User(String username, String password, String eMail)
 	{
 		this.username = username;
 		this.password = password;
-		this.eMail = eMail;
+		this.email = eMail;
 	}
 
 	public String getUsername()
@@ -29,9 +29,9 @@ public class User implements Serializable
 		return password;
 	}
 
-	public String geteMail()
+	public String getEmail()
 	{
-		return eMail;
+		return email;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class User implements Serializable
 		if (other instanceof User)
 		{
 			User otherUser = (User) other;
-			return username.equals(otherUser.username) && eMail.equals(otherUser.eMail);
+			return username.equals(otherUser.username) && email.equals(otherUser.email);
 		}
 		return false;
 	}
@@ -54,9 +54,14 @@ public class User implements Serializable
 	{
 		int result = 1;
 		result += username.hashCode() * 37;
-		result += eMail.hashCode() * 37;
 
 		return result;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return username + ":" + email;
 	}
 
 }

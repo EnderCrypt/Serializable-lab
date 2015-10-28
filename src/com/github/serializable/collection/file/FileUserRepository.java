@@ -31,7 +31,11 @@ public class FileUserRepository implements UserRepository
 	@Override
 	public void createUser(User user)
 	{
-		userSet.add(user);
+		if(!userSet.add(user))
+		{
+			throw new RuntimeException("Could not add user: " + user.toString());
+		}
+				
 	}
 
 	@Override
@@ -49,23 +53,27 @@ public class FileUserRepository implements UserRepository
 	}
 
 	@Override
-	public void readUser(User user)
+	public Set<User> readUser()
 	{
-		// TODO Auto-generated method stub
-		
+		return new HashSet<>(userSet);
 	}
 
 	@Override
 	public void deleteUser(User user)
 	{
-		// TODO Auto-generated method stub
+		if(userSet.contains(user))
+		{
+			if(!userSet.remove(user))
+			{
+				throw new RuntimeException("Could not remove user! Make sure user already exists.");
+			}
+		}
 		
 	}
 	
 	@Override
 	public void requestSave()
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
