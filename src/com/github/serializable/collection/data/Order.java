@@ -9,7 +9,9 @@ import java.util.List;
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
-	private  List<Product> products;
+	private List<Product> products;
+	private User user;
+	private Product product;
 	
 	public Order()
 	{

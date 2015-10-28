@@ -1,6 +1,9 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -74,7 +77,15 @@ public class FileUserRepository implements UserRepository
 	@Override
 	public void requestSave()
 	{
-		
+		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory)))
+		{
+			out.writeObject(userSet);
+		} 
+		catch(IOException e)
+		{
+			e.getMessage();
+			e.printStackTrace();		
+		}
 	}
 
 }

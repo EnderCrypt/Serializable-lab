@@ -17,7 +17,7 @@ public class User implements Serializable
 	private String email;
 	private List<Order> orders = new ArrayList<>();
 
-	public User(ECommerceService eCom, String username, String password, String email)
+	public User(String username, String password, String email)
 	{
 		this.username = username;
 		this.password = password;
