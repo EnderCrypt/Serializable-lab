@@ -19,26 +19,34 @@ import com.github.serializable.collection.data.Order;
 public class FileOrderRepository implements OrderRepository
 {
 	private File saveDirectory;
+	private File saveFile;
 	private Set<Order> orderSet = new HashSet<Order>();
-	
-	public FileOrderRepository(String directory)
+
+	public FileOrderRepository(String directory) throws IOException
 	{
 		// init variables
 		saveDirectory = new File(directory);
+		saveFile = new File(saveDirectory + "/data");
 		// create directory
 		if (!saveDirectory.exists())
 		{
-			if (!saveDirectory.mkdirs()) // for example sending in the directory "#€&&()&=" into the constructor fails to create a dir
+			if (!saveDirectory.mkdirs()) // for example sending in the directory
+											// "#€&&()&=" into the constructor
+											// fails to create a dir
 			{
 				throw new RuntimeException("Failed to create directory");
 			}
+		}
+		if (saveFile.createNewFile())
+		{
+			requestSave();
 		}
 	}
 
 	@Override
 	public void createOrder(Order order)
 	{
-		if(!orderSet.add(order))
+		if (!orderSet.add(order))
 		{
 			throw new RuntimeException("Could not add order: " + order.toString());
 		}
@@ -47,7 +55,7 @@ public class FileOrderRepository implements OrderRepository
 	@Override
 	public void updateOrder(Order order)
 	{
-		if(orderSet.contains(order))
+		if (orderSet.contains(order))
 		{
 			orderSet.remove(order);
 			orderSet.add(order);
@@ -56,22 +64,22 @@ public class FileOrderRepository implements OrderRepository
 		{
 			throw new RuntimeException("Order set does not contain specific order! " + order.toString());
 		}
-		
+
 	}
 
 	@Override
 	public void readAll()
 	{
-		if(orderSet.size() > 0)
+		if (orderSet.size() > 0)
 		{
 			throw new RuntimeException("Data has already been read");
 		}
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"data")))
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile)))
 		{
 			orderSet = (Set<Order>) ois.readObject();
 		}
-		
-		//Catch
+
+		// Catch
 		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
@@ -89,9 +97,9 @@ public class FileOrderRepository implements OrderRepository
 	@Override
 	public void deleteOrder(Order order)
 	{
-		if(orderSet.contains(order))
+		if (orderSet.contains(order))
 		{
-			if(!orderSet.remove(order))
+			if (!orderSet.remove(order))
 			{
 				throw new RuntimeException("Could not remove order! Make sure order already exists.");
 			}
@@ -101,15 +109,15 @@ public class FileOrderRepository implements OrderRepository
 			throw new RuntimeException("Order set does not contain specific order!");
 		}
 	}
-	
+
 	@Override
 	public void requestSave()
 	{
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory)))
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveFile)))
 		{
 			out.writeObject(orderSet);
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			e.getMessage();
 			e.printStackTrace();

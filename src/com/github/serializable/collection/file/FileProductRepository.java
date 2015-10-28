@@ -18,22 +18,25 @@ import com.github.serializable.collection.data.Product;
  */
 public class FileProductRepository implements ProductRepository
 {
-	private File saveDirectory; 
+	private File saveDirectory;
 	private File saveFile;
 	private Set<Product> productSet = new HashSet<Product>();
+
 	public FileProductRepository(String directory) throws IOException
 	{
 		// init variables
 		saveDirectory = new File(directory);
+		saveFile = new File(saveDirectory + "/data");
 		// create directory
 		if (!saveDirectory.exists())
 		{
-			if (!saveDirectory.mkdirs()) // for example sending in the directory "#€&&()&=" into the constructor fails to create a dir
+			if (!saveDirectory.mkdirs()) // for example sending in the directory
+											// "#€&&()&=" into the constructor
+											// fails to create a dir
 			{
 				throw new RuntimeException("Failed to create directory");
 			}
 		}
-		saveFile = new File(saveDirectory+"/data");
 		if (saveFile.createNewFile())
 		{
 			requestSave();
@@ -43,7 +46,7 @@ public class FileProductRepository implements ProductRepository
 	@Override
 	public void createProduct(Product product)
 	{
-		if(!productSet.add(product))
+		if (!productSet.add(product))
 		{
 			throw new RuntimeException("Could not add product: " + product.toString());
 		}
@@ -52,7 +55,7 @@ public class FileProductRepository implements ProductRepository
 	@Override
 	public void updateProduct(Product product)
 	{
-		if(productSet.contains(product))
+		if (productSet.contains(product))
 		{
 			productSet.remove(product);
 			productSet.add(product);
@@ -70,12 +73,12 @@ public class FileProductRepository implements ProductRepository
 		{
 			throw new RuntimeException("Data has already been read");
 		}
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveDirectory+"/data")))
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile)))
 		{
 			productSet = (Set<Product>) ois.readObject();
 		}
-		
-		//Catch
+
+		// Catch
 		catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
@@ -88,15 +91,15 @@ public class FileProductRepository implements ProductRepository
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
 	public void deleteProduct(Product product)
 	{
-		if(productSet.contains(product))
+		if (productSet.contains(product))
 		{
-			if(!productSet.remove(product))
+			if (!productSet.remove(product))
 			{
 				throw new RuntimeException("Could not remove product: " + product.toString());
 			}
@@ -106,11 +109,11 @@ public class FileProductRepository implements ProductRepository
 			throw new RuntimeException("Product set does not contain specified product!");
 		}
 	}
-	
+
 	@Override
 	public void requestSave()
 	{
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveDirectory+"data")))
+		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveFile)))
 		{
 			out.writeObject(productSet);
 		}
