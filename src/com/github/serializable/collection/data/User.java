@@ -8,19 +8,55 @@ import java.io.Serializable;
 public class User implements Serializable
 {
 	private static final long serialVersionUID = -4836684853320153893L;
-	
-	private String name;
+	private String username;
 	private String password;
-	
-	public User(String name, String password)
+	private String eMail;
+
+	public User(String username, String password, String eMail)
 	{
-		this.name = name;
+		this.username = username;
 		this.password = password;
+		this.eMail = eMail;
 	}
-	
-	public String toString()
+
+	public String getUsername()
 	{
-		return "User name: " + this.name + "User Password " + this.password;
+		return username;
+	}
+
+	public String getPassword()
+	{
+		return password;
+	}
+
+	public String geteMail()
+	{
+		return eMail;
+	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if (this == other)
+		{
+			return true;
+		}
+		if (other instanceof User)
+		{
+			User otherUser = (User) other;
+			return username.equals(otherUser.username) && eMail.equals(otherUser.eMail);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int result = 1;
+		result += username.hashCode() * 37;
+		result += eMail.hashCode() * 37;
+
+		return result;
 	}
 
 }
