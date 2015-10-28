@@ -9,9 +9,18 @@ public class User implements Serializable
 {
 	private static final long serialVersionUID = -4836684853320153893L;
 	
-	public User()
+	private String name;
+	private String password;
+	
+	public User(String name, String password)
 	{
-		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.password = password;
+	}
+	
+	public String toString()
+	{
+		return "User name: " + this.name + "User Password " + this.password;
 	}
 
 }
