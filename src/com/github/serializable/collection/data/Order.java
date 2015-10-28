@@ -1,6 +1,7 @@
 package com.github.serializable.collection.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,9 +10,10 @@ import java.util.List;
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
-	private List<Product> products;
+	private List<Product> products = new ArrayList<Product>();
 	private User user;
 	private Product product;
+	private int orderId;
 	
 	public Order()
 	{
@@ -27,11 +29,20 @@ public class Order implements Serializable
 		products.add(prod);
 		return this;
 	}
+	public int getOrderId()
+	{
+		return orderId;
+	}
 	
 	@Override
 	public int hashCode()
 	{
-		// TODO Auto-generated method stub
-		return super.hashCode();
+		return orderId * 37;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return ""+ orderId;
 	}
 }

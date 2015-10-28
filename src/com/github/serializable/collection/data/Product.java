@@ -20,7 +20,7 @@ public class Product implements Serializable
 		this.productID = productID;
 	}
 
-	public String getProduct()
+	public String getProductName()
 	{
 		return name;
 	}
@@ -63,5 +63,13 @@ public class Product implements Serializable
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return getProductID() + ":" + getProductName() + ":" + getProductDescription();
+	}
+	
+	
 
 }
