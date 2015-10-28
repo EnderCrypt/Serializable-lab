@@ -1,6 +1,9 @@
 package com.github.serializable;
 
 import com.github.serializable.collection.ECommerceService;
+import com.github.serializable.collection.data.Order;
+import com.github.serializable.collection.data.Product;
+import com.github.serializable.collection.data.User;
 import com.github.serializable.collection.file.FileOrderRepository;
 import com.github.serializable.collection.file.FileProductRepository;
 import com.github.serializable.collection.file.FileUserRepository;
@@ -15,7 +18,6 @@ public class Main
 		FileOrderRepository orderRep = new FileOrderRepository("Repository/Order/");
 		FileProductRepository productRep = new FileProductRepository("Repository/Product/");
 		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
-		
 		
 		/*
 		 *TODO: 

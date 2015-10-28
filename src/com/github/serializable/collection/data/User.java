@@ -1,6 +1,10 @@
 package com.github.serializable.collection.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.github.serializable.collection.ECommerceService;
 
 /**
  * this is the public user object that will be saved/loaded by the application
@@ -11,12 +15,19 @@ public class User implements Serializable
 	private String username;
 	private String password;
 	private String email;
+	private List<Order> orders = new ArrayList<>();
 
-	public User(String username, String password, String eMail)
+	public User(ECommerceService eCom, String username, String password, String email)
 	{
 		this.username = username;
 		this.password = password;
-		this.email = eMail;
+		this.email = email;
+	}
+	
+	public User addOrder(Order order)
+	{
+		orders.add(order);
+		return this;
 	}
 
 	public String getUsername()

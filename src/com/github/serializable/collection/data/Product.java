@@ -9,20 +9,20 @@ import java.io.Serializable;
 public class Product implements Serializable
 {
 	private static final long serialVersionUID = 525630403812799901L;
-	private String product;
+	private String name;
 	private String productDescription;
 	private int productID;
 
-	public Product(String product, String productDescription, int productID)
+	public Product(String name, String productDescription, int productID)
 	{
-		this.product = product;
+		this.name = name;
 		this.productDescription = productDescription;
 		this.productID = productID;
 	}
 
 	public String getProduct()
 	{
-		return product;
+		return name;
 	}
 
 	public String getProductDescription()
