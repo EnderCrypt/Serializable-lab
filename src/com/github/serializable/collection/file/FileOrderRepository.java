@@ -48,7 +48,8 @@ public class FileOrderRepository implements OrderRepository
 	{
 		if (!orderSet.add(order))
 		{
-			throw new RuntimeException("Could not add order: " + order.toString());
+			throw new RuntimeException("Could not add order: " + order.toString()
+										+ "\n Make sure argument has not already been created (on disk)");
 		}
 	}
 
@@ -123,6 +124,13 @@ public class FileOrderRepository implements OrderRepository
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public Set<Order> getSet()
+	{
+		return new HashSet<Order>(orderSet);
+	}
+	
 	@Override
 	public String toString()
 	{

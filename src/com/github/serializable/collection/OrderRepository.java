@@ -1,5 +1,7 @@
 package com.github.serializable.collection;
 
+import java.util.Set;
+
 import com.github.serializable.collection.data.Order;
 
 /**
@@ -12,4 +14,5 @@ public interface OrderRepository
 	public void readAll();
 	public void deleteOrder(Order order);
 	public void requestSave();
+	public Set<Order> getSet();
 }

@@ -48,7 +48,8 @@ public class FileProductRepository implements ProductRepository
 	{
 		if (!productSet.add(product))
 		{
-			throw new RuntimeException("Could not add product: " + product.toString());
+			throw new RuntimeException("Could not add product: " + product.toString()
+										+ "\n Make sure argument has not already been created (on disk)");
 		}
 	}
 
@@ -67,7 +68,7 @@ public class FileProductRepository implements ProductRepository
 	}
 
 	@Override
-	public void readAll()
+	public void readAll() //Reads the data from Product/data
 	{
 		if (productSet.size() > 0)
 		{
@@ -121,6 +122,12 @@ public class FileProductRepository implements ProductRepository
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public Set<Product> getSet()
+	{
+		return new HashSet<Product>(productSet);
 	}
 	
 	@Override

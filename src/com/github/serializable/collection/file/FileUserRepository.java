@@ -45,9 +45,9 @@ public class FileUserRepository implements UserRepository
 	{
 		if(!userSet.add(user))
 		{
-			throw new RuntimeException("Could not add user: " + user.toString());
+			throw new RuntimeException("Could not add user: " + user.toString()
+										+ "\n Make sure argument has not already been created (on disk)");
 		}
-				
 	}
 
 	@Override
@@ -120,6 +120,12 @@ public class FileUserRepository implements UserRepository
 			e.getMessage();
 			e.printStackTrace();		
 		}
+	}
+	
+	@Override
+	public Set<User> getSet()
+	{
+		return new HashSet<User>(userSet);
 	}
 	
 	@Override

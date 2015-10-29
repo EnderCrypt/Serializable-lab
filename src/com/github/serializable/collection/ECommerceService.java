@@ -1,5 +1,8 @@
 package com.github.serializable.collection;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.github.serializable.collection.data.Order;
 import com.github.serializable.collection.data.Product;
 import com.github.serializable.collection.data.User;
@@ -13,6 +16,10 @@ public class ECommerceService
 	ProductRepository productRepository;
 	OrderRepository orderRepository;
 	
+	//experimental
+	Set<User> internalUserSet = new HashSet<User>();
+	Set<Product> internalProductSet = new HashSet<Product>();
+
 	public ECommerceService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository)
 	{
 		this.userRepository = userRepository;
@@ -25,12 +32,6 @@ public class ECommerceService
 		productRepository.readAll();
 		orderRepository.readAll();
 		userRepository.readAll();
-		//TODO: remove sysout
-		/*
-		System.out.println(productRepository);
-		System.out.println(orderRepository);
-		System.out.println(userRepository);
-		*/
 	}
 	public String toString()
 	{
@@ -50,18 +51,4 @@ public class ECommerceService
 		return sb.toString();
 	}
 	
-	public void add(User user)
-	{
-		
-	}
-	
-	public void add(Product product)
-	{
-		
-	}
-	
-	public void add(Order order)
-	{
-		
-	}
 }

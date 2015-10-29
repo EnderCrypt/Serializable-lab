@@ -1,5 +1,7 @@
 package com.github.serializable.collection;
 
+import java.util.Set;
+
 import com.github.serializable.collection.data.Product;
 
 /**
@@ -12,4 +14,5 @@ public interface ProductRepository
 	public void readAll();
 	public void deleteProduct(Product product);
 	public void requestSave();
+	public Set<Product> getSet();
 }

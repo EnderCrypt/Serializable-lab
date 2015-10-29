@@ -7,26 +7,25 @@ import java.util.List;
 /**
  * this is the public order object that will be saved/loaded by the application
  */
+
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
 	private List<Product> products = new ArrayList<Product>();
-	private User user;
-	private Product product;
 	private int orderId;
 	
 	public Order(int id)
 	{
 		orderId = id;
 	}
-	public Order add(List<Product> list)
+	public Order addProducts(List<Product> productList)
 	{
-		products.addAll(list);
+		products.addAll(productList);
 		return this;
 	}
-	public Order add(Product prod)
+	public Order addProduct(Product product)
 	{
-		products.add(prod);
+		products.add(product);
 		return this;
 	}
 	public int getOrderId()
@@ -61,6 +60,6 @@ public class Order implements Serializable
 	@Override
 	public String toString()
 	{
-		return orderId + ":"; //TODO: make toString print list of products if list is not null, or single product if product is not null
+		return orderId+" - "+products.toString(); 
 	}
 }
