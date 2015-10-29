@@ -1,5 +1,7 @@
 package com.github.serializable.collection;
 
+import java.util.Set;
+
 import com.github.serializable.collection.data.User;
 
 /**
@@ -12,4 +14,5 @@ public interface UserRepository
 	public void readAll();
 	public void deleteUser(User user);
 	public void requestSave();
+	public Set<User> getSet();
 }
