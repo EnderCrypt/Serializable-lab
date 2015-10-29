@@ -1,6 +1,8 @@
 package com.github.serializable;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.serializable.collection.ECommerceService;
 import com.github.serializable.collection.OrderRepository;
@@ -22,8 +24,7 @@ import com.github.serializable.collection.file.FileUserRepository;
  * TODO: 
  * - finish eComService methods
  * 		- implement "business-logic" methods, e.g. restrictions/accessibility (read doc)
- * 		-  (?)make eComService validate argument data and if all checks, send to FileXxxRepo for writing to disk
- * 
+ * 		
  */
 
 public class Main
@@ -48,10 +49,23 @@ public class Main
 		}
 		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
 		
-		System.out.println(eCom);
 		
-		//User user = new User("sfsdsdf", "4tey4", "@s@@@");
-		//eCom.add(user);
+		User user = new User("Eduard", "slinkydinky", "eduardDestroyer@free.com");
+		Order order = new Order(user);
+		List<Product> prodList = new ArrayList<Product>();
+		prodList.add(new Product("apple", "green freshly picked grannie smith", 0));
+		prodList.add(new Product("carrot", "rich orange newly picked", 1));
+		prodList.add(new Product("MacBookPro2015", "i5 2560k, 8gb RAM, 256GB SSD, big dick edition", 2));
+		prodList.add(new Product("lube", "vibrant white", 3));
+		
+
+		order.addProduct(prodList);
+		eCom.add(user);
+		eCom.add(order);
+		eCom.add(prodList);
+		
+		
+		System.out.println(eCom);
 	}
 
 }

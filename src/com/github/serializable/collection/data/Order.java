@@ -1,7 +1,6 @@
 package com.github.serializable.collection.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,22 +21,26 @@ public class Order implements Serializable
 		buyer = user.getUsername();
 		orderIndex = user.newOrderId();
 	}
+	
 	public Order addProduct(List<Product> productList)
 	{
 		for (Product product : productList)
 		{
 			addProduct(product);
 		}
+		
 		return this;
 	}
-	public String getBuyer()
-	{
-		return buyer;
-	}
+	
 	public Order addProduct(Product product)
 	{
 		products.add(product.getProductID());
 		return this;
+	}
+	
+	public String getBuyer()
+	{
+		return buyer;
 	}
 	@Override
 	public int hashCode()
@@ -51,16 +54,45 @@ public class Order implements Serializable
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (getClass() != obj.getClass())
+		{
+			return false;
+		}
+		
 		Order other = (Order) obj;
-		if (orderIndex != other.orderIndex) return false;
+		
+		if (orderIndex != other.orderIndex)
+		{
+			return false;
+		}
 		if (buyer == null)
 		{
-			if (other.buyer != null) return false;
+			if (other.buyer != null)
+			{
+				return false;
+			}
 		}
-		else if (!buyer.equals(other.buyer)) return false;
+		else if (!buyer.equals(other.buyer))
+		{
+			return false;
+		}
+		
 		return true;
+	
+	}
+	@Override
+	public String toString()
+	{
+		return orderIndex + " - " + (products.toString().equals("[]") || products.toString().equals(null) //if products are null or showing empty array
+				? "Order " + orderIndex + " does not contain any products!" //if true
+						: products.toString()); //if false
 	}
 }

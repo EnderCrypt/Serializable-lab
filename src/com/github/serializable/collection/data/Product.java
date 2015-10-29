@@ -75,7 +75,7 @@ public class Product implements Serializable
 	@Override
 	public String toString()
 	{
-		return getProductID() + ":" + getProductName() + ":" + getProductDescription();
+		return getProductID() + " : " + getProductName() + " : " + getProductDescription() + "\n";
 	}
 	
 	

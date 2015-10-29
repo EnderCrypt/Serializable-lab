@@ -1,6 +1,7 @@
 package com.github.serializable.collection;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.github.serializable.collection.data.Order;
@@ -76,6 +77,14 @@ public class ECommerceService
 			productRepository.requestSave();
 			return true;
 		}
+	}
+	public boolean add(List<Product> products)
+	{
+		for(Product prod : products)
+		{
+			add(prod);
+		}
+		return true;
 	}
 
 	private void loadData()

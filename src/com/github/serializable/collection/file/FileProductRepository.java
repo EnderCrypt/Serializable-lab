@@ -1,14 +1,11 @@
 package com.github.serializable.collection.file;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Set;
-import java.util.HashSet;
+
 
 import com.github.serializable.collection.ProductRepository;
 import com.github.serializable.collection.data.Product;
@@ -18,7 +15,7 @@ import com.github.serializable.collection.data.Product;
  */
 public class FileProductRepository extends FileRepoAbstract<Product> implements ProductRepository
 {
-	
+
 	public FileProductRepository(String directory) throws IOException
 	{
 		super(directory);
