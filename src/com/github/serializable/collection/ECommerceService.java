@@ -18,8 +18,9 @@ public class ECommerceService
 	OrderRepository orderRepository;
 
 	// experimental
-	Set<User> internalUserSet = new HashSet<User>();
-	Set<Product> internalProductSet = new HashSet<Product>();
+	Set<User> internalUserSet;// = new HashSet<>();
+	Set<Product> internalProductSet;// = new HashSet<>();
+	Set<Order> internalOrderSet;// = new HashSet<>();
 
 	public ECommerceService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository)
 	{
@@ -27,6 +28,54 @@ public class ECommerceService
 		this.productRepository = productRepository;
 		this.orderRepository = orderRepository;
 		loadData();
+		internalUserSet = userRepository.getSet();
+		internalOrderSet = orderRepository.getSet();
+		internalProductSet = productRepository.getSet();
+	}
+	
+	public boolean add(User user)
+	{
+		if (internalUserSet.contains(user))
+		{
+			return false;
+		}
+		else
+		{
+			internalUserSet.add(user);
+			userRepository.createUser(user);
+			userRepository.requestSave();
+			return true;
+		}
+	}
+	
+	public boolean add(Order order)
+	{
+		if (internalOrderSet.contains(order))
+		{
+			return false;
+		}
+		else
+		{
+			internalOrderSet.add(order);
+			orderRepository.createOrder(order);
+			orderRepository.requestSave();
+			return true;
+		}
+	}
+	
+	public boolean add(Product product)
+	{
+		if (internalProductSet.contains(product))
+		{
+			return false;
+		}
+		else
+		{
+			internalProductSet.add(product);
+			productRepository.createProduct(product);
+			productRepository.requestSave();
+			return true;
+		}
 	}
 
 	private void loadData()

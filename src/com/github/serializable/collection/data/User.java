@@ -15,19 +15,17 @@ public class User implements Serializable
 	private String username;
 	private String password;
 	private String email;
-	private List<Order> orders = new ArrayList<>();
+	private int orderIndex = 0;
 
 	public User(String username, String password, String email)
 	{
+		if ( (username == null) || (password == null) || (email == null))
+		{
+			throw new NullPointerException("fields cant be null");
+		}
 		this.username = username;
 		this.password = password;
 		this.email = email;
-	}
-	
-	public User addOrder(Order order)
-	{
-		orders.add(order);
-		return this;
 	}
 
 	public String getUsername()
@@ -44,6 +42,11 @@ public class User implements Serializable
 	{
 		return email;
 	}
+	
+	int newOrderId()
+	{
+		return ++orderIndex;
+	}
 
 	@Override
 	public boolean equals(Object other)
@@ -55,7 +58,7 @@ public class User implements Serializable
 		if (other instanceof User)
 		{
 			User otherUser = (User) other;
-			return username.equals(otherUser.username) && email.equals(otherUser.email);
+			return username.equals(otherUser.username) || email.equals(otherUser.email);
 		}
 		return false;
 	}

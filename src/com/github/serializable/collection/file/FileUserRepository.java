@@ -1,13 +1,9 @@
 package com.github.serializable.collection.file;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashSet;
 import java.util.Set;
 
 import com.github.serializable.collection.UserRepository;
@@ -16,34 +12,17 @@ import com.github.serializable.collection.data.User;
 /**
  * handles user objects by saving/loading them to files using serialization
  */
-public class FileUserRepository implements UserRepository
+public class FileUserRepository extends FileRepoAbstract<User> implements UserRepository
 {
-	private File saveDirectory; 
-	private File saveFile;
-	private Set<User> userSet = new HashSet<User>();
 	public FileUserRepository(String directory) throws IOException
 	{
-		// init variables
-		saveDirectory = new File(directory);
-		saveFile = new File(directory+"/data");
-		// create directory
-		if (!saveDirectory.exists())
-		{
-			if (!saveDirectory.mkdirs()) // for example sending in the directory "#€&&()&=" into the constructor fails to create a dir
-			{
-				throw new RuntimeException("Failed to create directory");
-			}
-		}
-		if(saveFile.createNewFile())
-		{
-			requestSave();
-		}
+		super(directory);
 	}
 
 	@Override
 	public void createUser(User user)
 	{
-		if(!userSet.add(user))
+		if(!set.add(user))
 		{
 			throw new RuntimeException("Could not add user: " + user.toString()
 										+ "\n Make sure argument has not already been created (on disk)");
@@ -53,10 +32,10 @@ public class FileUserRepository implements UserRepository
 	@Override
 	public void updateUser(User user)
 	{
-		if(userSet.contains(user))
+		if(set.contains(user))
 		{
-			userSet.remove(user);
-			userSet.add(user);
+			set.remove(user);
+			set.add(user);
 		}
 		else
 		{
@@ -67,13 +46,13 @@ public class FileUserRepository implements UserRepository
 	@Override
 	public void readAll()
 	{
-		if (userSet.size() > 0)
+		if (set.size() > 0)
 		{
 			throw new RuntimeException("Data has already been read");
 		}
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile)))
 		{
-			userSet = (Set<User>) ois.readObject();
+			set = (Set<User>) ois.readObject();
 		}
 		
 		//Catch
@@ -94,9 +73,9 @@ public class FileUserRepository implements UserRepository
 	@Override
 	public void deleteUser(User user)
 	{
-		if(userSet.contains(user))
+		if(set.contains(user))
 		{
-			if(!userSet.remove(user))
+			if(!set.remove(user))
 			{
 				throw new RuntimeException("Could not remove user! Make sure user already exists.");
 			}
@@ -106,32 +85,6 @@ public class FileUserRepository implements UserRepository
 			throw new RuntimeException("User set does not contain specific user!");
 		}
 		
-	}
-	
-	@Override
-	public void requestSave()
-	{
-		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveFile)))
-		{
-			out.writeObject(userSet);
-		} 
-		catch(IOException e)
-		{
-			e.getMessage();
-			e.printStackTrace();		
-		}
-	}
-	
-	@Override
-	public Set<User> getSet()
-	{
-		return new HashSet<User>(userSet);
-	}
-	
-	@Override
-	public String toString()
-	{
-		return userSet.toString();
 	}
 
 }

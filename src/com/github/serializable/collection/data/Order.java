@@ -2,7 +2,9 @@ package com.github.serializable.collection.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * this is the public order object that will be saved/loaded by the application
@@ -11,55 +13,54 @@ import java.util.List;
 public class Order implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
-	private List<Product> products = new ArrayList<Product>();
-	private int orderId;
+	private String buyer;
+	private int orderIndex;
+	Set<Integer> products = new HashSet<>();
 	
-	public Order(int id)
+	public Order(User user)
 	{
-		orderId = id;
+		buyer = user.getUsername();
+		orderIndex = user.newOrderId();
 	}
-	public Order addProducts(List<Product> productList)
+	public Order addProduct(List<Product> productList)
 	{
-		products.addAll(productList);
+		for (Product product : productList)
+		{
+			addProduct(product);
+		}
 		return this;
+	}
+	public String getBuyer()
+	{
+		return buyer;
 	}
 	public Order addProduct(Product product)
 	{
-		products.add(product);
+		products.add(product.getProductID());
 		return this;
 	}
-	public int getOrderId()
-	{
-		return orderId;
-	}
-	
 	@Override
 	public int hashCode()
 	{
-		return orderId * 37;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + orderIndex;
+		result = prime * result + ((buyer == null) ? 0 : buyer.hashCode());
+		return result;
 	}
 	@Override
 	public boolean equals(Object obj)
 	{
-		if(this == obj)
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		Order other = (Order) obj;
+		if (orderIndex != other.orderIndex) return false;
+		if (buyer == null)
 		{
-			return true;
+			if (other.buyer != null) return false;
 		}
-		if(obj == null)
-		{
-			return false;
-		}
-		if(obj instanceof Order)
-		{
-			Order otherOrder = (Order) obj;
-			return this.getOrderId() == otherOrder.getOrderId();
-		}
-		return false;
-	}
-	
-	@Override
-	public String toString()
-	{
-		return orderId+" - "+products.toString(); 
+		else if (!buyer.equals(other.buyer)) return false;
+		return true;
 	}
 }

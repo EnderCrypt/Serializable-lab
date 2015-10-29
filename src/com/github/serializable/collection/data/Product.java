@@ -15,6 +15,14 @@ public class Product implements Serializable
 
 	public Product(String name, String productDescription, int productID)
 	{
+		if (name == null)
+		{
+			throw new NullPointerException("name cant be null");
+		}
+		if (productDescription == null)
+		{
+			productDescription = "No description";
+		}
 		this.name = name;
 		this.productDescription = productDescription;
 		this.productID = productID;
