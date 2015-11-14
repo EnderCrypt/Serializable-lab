@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Set;
 
-import com.github.serializable.collection.UserRepository;
 import com.github.serializable.collection.data.User;
+import com.github.serializable.collection.storage.StorageRepository;
 
 /**
  * handles user objects by saving/loading them to files using serialization
  */
-public class FileUserRepository extends FileRepoAbstract<User> implements UserRepository
+public class FileUserRepository extends FileRepoAbstract<User> implements StorageRepository<User>
 {
 	public FileUserRepository(String directory) throws IOException
 	{
@@ -20,7 +20,7 @@ public class FileUserRepository extends FileRepoAbstract<User> implements UserRe
 	}
 
 	@Override
-	public void createUser(User user)
+	public void createUnit(User user)
 	{
 		if(!set.add(user))
 		{
@@ -30,7 +30,7 @@ public class FileUserRepository extends FileRepoAbstract<User> implements UserRe
 	}
 
 	@Override
-	public void updateUser(User user)
+	public void updateUnit(User user)
 	{
 		if(set.contains(user))
 		{
@@ -43,6 +43,7 @@ public class FileUserRepository extends FileRepoAbstract<User> implements UserRe
 		}
 	}
 
+	@SuppressWarnings({"unchecked"})
 	@Override
 	public void readAll()
 	{
@@ -71,7 +72,7 @@ public class FileUserRepository extends FileRepoAbstract<User> implements UserRe
 	}
 
 	@Override
-	public void deleteUser(User user)
+	public void deleteUnit(User user)
 	{
 		if(set.contains(user))
 		{

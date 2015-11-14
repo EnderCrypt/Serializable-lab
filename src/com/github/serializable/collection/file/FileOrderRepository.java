@@ -1,20 +1,18 @@
 package com.github.serializable.collection.file;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Set;
 
-import com.github.serializable.collection.OrderRepository;
 import com.github.serializable.collection.data.Order;
+import com.github.serializable.collection.storage.StorageRepository;
 
 /**
  * handles order objects by saving/loading them to files using serialization
  */
-public class FileOrderRepository extends FileRepoAbstract<Order> implements OrderRepository
+public class FileOrderRepository extends FileRepoAbstract<Order> implements StorageRepository<Order>
 {
 	
 	public FileOrderRepository(String directory) throws IOException
@@ -23,7 +21,7 @@ public class FileOrderRepository extends FileRepoAbstract<Order> implements Orde
 	}
 
 	@Override
-	public void createOrder(Order order)
+	public void createUnit(Order order)
 	{
 		if (!set.add(order))
 		{
@@ -33,7 +31,7 @@ public class FileOrderRepository extends FileRepoAbstract<Order> implements Orde
 	}
 
 	@Override
-	public void updateOrder(Order order)
+	public void updateUnit(Order order)
 	{
 		if (set.contains(order))
 		{
@@ -47,6 +45,7 @@ public class FileOrderRepository extends FileRepoAbstract<Order> implements Orde
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void readAll()
 	{
@@ -75,7 +74,7 @@ public class FileOrderRepository extends FileRepoAbstract<Order> implements Orde
 	}
 
 	@Override
-	public void deleteOrder(Order order)
+	public void deleteUnit(Order order)
 	{
 		if (set.contains(order))
 		{

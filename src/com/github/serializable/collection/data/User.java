@@ -1,10 +1,6 @@
 package com.github.serializable.collection.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.github.serializable.collection.ECommerceService;
 
 /**
  * this is the public user object that will be saved/loaded by the application
@@ -19,10 +15,6 @@ public class User implements Serializable
 
 	public User(String username, String password, String email)
 	{
-		if ( (username == null) || (password == null) || (email == null))
-		{
-			throw new NullPointerException("fields cant be null");
-		}
 		this.username = username;
 		this.password = password;
 		this.email = email;

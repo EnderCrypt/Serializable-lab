@@ -62,36 +62,20 @@ public class Order implements Serializable
 		{
 			return false;
 		}
-		if (getClass() != obj.getClass())
+		if(obj instanceof Order)
 		{
-			return false;
+			//enda som gör orders logiskt lika är deras order index.
+			//två objekt kan inte ha samma id men kan ha samma buyer
+			Order otherOrder = (Order) obj;
+			return this.orderIndex == otherOrder.orderIndex; 
 		}
-		
-		Order other = (Order) obj;
-		
-		if (orderIndex != other.orderIndex)
-		{
-			return false;
-		}
-		if (buyer == null)
-		{
-			if (other.buyer != null)
-			{
-				return false;
-			}
-		}
-		else if (!buyer.equals(other.buyer))
-		{
-			return false;
-		}
-		
 		return true;
 	
 	}
 	@Override
 	public String toString()
 	{
-		return orderIndex + " - " + (products.toString().equals("[]") || products.toString().equals(null) //if products are null or showing empty array
+		return orderIndex + " - " + (products.toString().isEmpty() //if products are null or showing empty array
 				? "Order " + orderIndex + " does not contain any products!" //if true
 						: products.toString()); //if false
 	}

@@ -1,29 +1,33 @@
-package com.github.serializable.collection;
+package com.github.serializable.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.github.serializable.collection.data.Order;
 import com.github.serializable.collection.data.Product;
 import com.github.serializable.collection.data.User;
+import com.github.serializable.collection.storage.StorageRepository;
 
 /**
  * the main ECommerce object, handles order/product/users and checks that all is
  * fine, then saves using the selected repository type
+ *
+ * TODO: rewrite whole ECommerce.
+ * - all other files are complete as it is only the ecommerce class that needs to handle logics
+ *
  */
 public class ECommerceService
 {
-	UserRepository userRepository;
-	ProductRepository productRepository;
-	OrderRepository orderRepository;
+	StorageRepository<User> userRepository;
+	StorageRepository<Product> productRepository;
+	StorageRepository<Order> orderRepository;
 
 	// experimental
 	Set<User> internalUserSet;// = new HashSet<>();
 	Set<Product> internalProductSet;// = new HashSet<>();
 	Set<Order> internalOrderSet;// = new HashSet<>();
 
-	public ECommerceService(UserRepository userRepository, ProductRepository productRepository, OrderRepository orderRepository)
+	public ECommerceService(StorageRepository<User> userRepository, StorageRepository<Product> productRepository, StorageRepository<Order> orderRepository)
 	{
 		this.userRepository = userRepository;
 		this.productRepository = productRepository;
@@ -32,6 +36,13 @@ public class ECommerceService
 		internalUserSet = userRepository.getSet();
 		internalOrderSet = orderRepository.getSet();
 		internalProductSet = productRepository.getSet();
+	}
+	
+	private void loadData()
+	{
+		productRepository.readAll();
+		orderRepository.readAll();
+		userRepository.readAll();
 	}
 	
 	public boolean add(User user)
@@ -43,7 +54,7 @@ public class ECommerceService
 		else
 		{
 			internalUserSet.add(user);
-			userRepository.createUser(user);
+			userRepository.createUnit(user);
 			userRepository.requestSave();
 			return true;
 		}
@@ -58,7 +69,7 @@ public class ECommerceService
 		else
 		{
 			internalOrderSet.add(order);
-			orderRepository.createOrder(order);
+			orderRepository.createUnit(order);
 			orderRepository.requestSave();
 			return true;
 		}
@@ -73,7 +84,7 @@ public class ECommerceService
 		else
 		{
 			internalProductSet.add(product);
-			productRepository.createProduct(product);
+			productRepository.createUnit(product);
 			productRepository.requestSave();
 			return true;
 		}
@@ -85,13 +96,6 @@ public class ECommerceService
 			add(prod);
 		}
 		return true;
-	}
-
-	private void loadData()
-	{
-		productRepository.readAll();
-		orderRepository.readAll();
-		userRepository.readAll();
 	}
 
 	public String toString()

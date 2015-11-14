@@ -15,14 +15,6 @@ public class Product implements Serializable
 
 	public Product(String name, String productDescription, int productID)
 	{
-		if (name == null)
-		{
-			throw new NullPointerException("name cant be null");
-		}
-		if (productDescription == null)
-		{
-			productDescription = "No description";
-		}
 		this.name = name;
 		this.productDescription = productDescription;
 		this.productID = productID;
@@ -46,10 +38,6 @@ public class Product implements Serializable
 	@Override
 	public int hashCode()
 	{
-		//final int prime = 31;
-		//int result = 1;
-		//result = prime * result + productID;
-		//return result;
 		return productID * 37;
 	}
 
@@ -67,7 +55,7 @@ public class Product implements Serializable
 		if (obj instanceof Product) 
 		{
 			Product otherProduct = (Product) obj;
-			return this.productID == otherProduct.getProductID();
+			return this.getProductID() == otherProduct.getProductID();
 		}
 		return false;
 	}

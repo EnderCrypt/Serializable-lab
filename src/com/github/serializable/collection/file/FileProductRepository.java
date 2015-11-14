@@ -6,14 +6,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Set;
 
-
-import com.github.serializable.collection.ProductRepository;
 import com.github.serializable.collection.data.Product;
+import com.github.serializable.collection.storage.StorageRepository;
 
 /**
  * handles product objects by saving/loading them to files using serialization
  */
-public class FileProductRepository extends FileRepoAbstract<Product> implements ProductRepository
+public class FileProductRepository extends FileRepoAbstract<Product> implements StorageRepository<Product>
 {
 
 	public FileProductRepository(String directory) throws IOException
@@ -22,7 +21,7 @@ public class FileProductRepository extends FileRepoAbstract<Product> implements 
 	}
 
 	@Override
-	public void createProduct(Product product)
+	public void createUnit(Product product)
 	{
 		if (!set.add(product))
 		{
@@ -32,7 +31,7 @@ public class FileProductRepository extends FileRepoAbstract<Product> implements 
 	}
 
 	@Override
-	public void updateProduct(Product product)
+	public void updateUnit(Product product)
 	{
 		if (set.contains(product))
 		{
@@ -45,6 +44,7 @@ public class FileProductRepository extends FileRepoAbstract<Product> implements 
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void readAll() //Reads the data from Product/data
 	{
@@ -74,7 +74,7 @@ public class FileProductRepository extends FileRepoAbstract<Product> implements 
 	}
 
 	@Override
-	public void deleteProduct(Product product)
+	public void deleteUnit(Product product)
 	{
 		if (set.contains(product))
 		{
