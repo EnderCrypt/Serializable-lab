@@ -1,17 +1,24 @@
 package com.github.serializable.collection.file;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+
 public abstract class FileRepoAbstract<T>
 {
 	private File saveDirectory; 
+	private int id = 0;
 	protected File saveFile;
 	protected Set<T> set = new HashSet<>();
+	
+	
 	public FileRepoAbstract(String directory) throws IOException
 	{
 		// init variables
@@ -36,6 +43,7 @@ public abstract class FileRepoAbstract<T>
 		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(saveFile)))
 		{
 			out.writeObject(set);
+			out.writeInt(id);
 		} 
 		catch(IOException e)
 		{
@@ -44,9 +52,32 @@ public abstract class FileRepoAbstract<T>
 		}
 	}
 	
-	public Set<T> getSet()
+	@SuppressWarnings("unchecked")
+	public void readAllToMemory()
 	{
-		return new HashSet<T>(set);
+		if (set.size() > 0)
+		{
+			throw new RuntimeException("Data has already been read");
+		}
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile)))
+		{
+			id = ois.readInt();
+			set = (Set<T>) ois.readObject(); //reads whole set as object
+		}
+
+		// Catch
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			
+		}
 	}
 	
 	@Override
@@ -54,4 +85,11 @@ public abstract class FileRepoAbstract<T>
 	{
 		return set.toString();
 	}
+	
+	int nextId()
+	{
+		return id++;
+	}
+
+	
 }

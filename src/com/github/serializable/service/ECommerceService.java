@@ -1,11 +1,6 @@
 package com.github.serializable.service;
 
-import java.util.List;
-import java.util.Set;
 
-import com.github.serializable.collection.data.Order;
-import com.github.serializable.collection.data.Product;
-import com.github.serializable.collection.data.User;
 import com.github.serializable.collection.storage.StorageRepository;
 
 /**
@@ -14,103 +9,80 @@ import com.github.serializable.collection.storage.StorageRepository;
  *
  * TODO: rewrite whole ECommerce.
  * - all other files are complete as it is only the ecommerce class that needs to handle logics
+ * -addSet of user/prod/order -- TIMMIE
+ * -add single of user/p/o -- TIMMIE
+ * -
  *
  */
 public class ECommerceService
 {
-	StorageRepository<User> userRepository;
-	StorageRepository<Product> productRepository;
-	StorageRepository<Order> orderRepository;
-
-	// experimental
-	Set<User> internalUserSet;// = new HashSet<>();
-	Set<Product> internalProductSet;// = new HashSet<>();
-	Set<Order> internalOrderSet;// = new HashSet<>();
-
-	public ECommerceService(StorageRepository<User> userRepository, StorageRepository<Product> productRepository, StorageRepository<Order> orderRepository)
+	private StorageRepository<User> userRep;
+	private StorageRepository<Product> prodRep;
+	private StorageRepository<Order> orderRep;
+	private static final int MAX_USERNAME_LENGTH = 30;
+	
+	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep)
 	{
-		this.userRepository = userRepository;
-		this.productRepository = productRepository;
-		this.orderRepository = orderRepository;
-		loadData();
-		internalUserSet = userRepository.getSet();
-		internalOrderSet = orderRepository.getSet();
-		internalProductSet = productRepository.getSet();
+		this.userRep = userRep;
+		this.prodRep = prodRep;
+		this.orderRep = orderRep;
 	}
 	
-	private void loadData()
+	//--Users
+	public void add(User user)
 	{
-		productRepository.readAll();
-		orderRepository.readAll();
-		userRepository.readAll();
+		if(user.getUsername().length() > MAX_USERNAME_LENGTH)
+		{
+			throw new IllegalArgumentException("Cannot contain more than " + MAX_USERNAME_LENGTH + " characters");
+		}
+		//TODO: password criteria
+		userRep.createUnit(user);
 	}
 	
-	public boolean add(User user)
+	public User newUser(String name, String password, String email)
 	{
-		if (internalUserSet.contains(user))
-		{
-			return false;
-		}
-		else
-		{
-			internalUserSet.add(user);
-			userRepository.createUnit(user);
-			userRepository.requestSave();
-			return true;
-		}
+		User user = new User(name, password, email);
+		add(user);
+		return user;
+	}
+	public void addAll(User[] userList)
+	{
+		//add every user from list to userRep
 	}
 	
-	public boolean add(Order order)
+	//--Orders
+	public void add(Order order)
 	{
-		if (internalOrderSet.contains(order))
-		{
-			return false;
-		}
-		else
-		{
-			internalOrderSet.add(order);
-			orderRepository.createUnit(order);
-			orderRepository.requestSave();
-			return true;
-		}
+		//add order to orderRep
+	}
+	public void addAll(Order[] orderList)
+	{
+		//add every order from list to orderRep
 	}
 	
-	public boolean add(Product product)
+	//--Products
+	public void add(Product product)
 	{
-		if (internalProductSet.contains(product))
-		{
-			return false;
-		}
-		else
-		{
-			internalProductSet.add(product);
-			productRepository.createUnit(product);
-			productRepository.requestSave();
-			return true;
-		}
+		//add product to prodRep
 	}
-	public boolean add(List<Product> products)
+	public void addAll(Product productList)
 	{
-		for(Product prod : products)
-		{
-			add(prod);
-		}
-		return true;
+		//add every products from list to prodRep
 	}
-
+	
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("Users:");
-		sb.append(userRepository);
+		sb.append(userRep);
 		sb.append("\n");
 
 		sb.append("Orders:");
-		sb.append(orderRepository);
+		sb.append(orderRep);
 		sb.append("\n");
 
 		sb.append("Products:");
-		sb.append(productRepository);
+		sb.append(prodRep);
 		sb.append("\n");
 
 		return sb.toString();

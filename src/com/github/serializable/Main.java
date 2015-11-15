@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.serializable.collection.data.Order;
-import com.github.serializable.collection.data.Product;
-import com.github.serializable.collection.data.User;
-import com.github.serializable.collection.file.FileOrderRepository;
-import com.github.serializable.collection.file.FileProductRepository;
-import com.github.serializable.collection.file.FileUserRepository;
+import com.github.serializable.collection.file.FileRepository;
 import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.service.ECommerceService;
+import com.github.serializable.service.Order;
+import com.github.serializable.service.Product;
+import com.github.serializable.service.User;
 
 
 /*STATUS: 29/10-15 01:50
@@ -36,9 +34,9 @@ public final class Main
 		try
 		{
 			// create file repositories
-			userRep = new FileUserRepository("Repository/User/");
-			orderRep = new FileOrderRepository("Repository/Order/");
-			productRep = new FileProductRepository("Repository/Product/");
+			userRep = new FileRepository<>("Repository/User/");
+			orderRep = new FileRepository<>("Repository/Order/");
+			productRep = new FileRepository<>("Repository/Product/");
 		}
 		catch (IOException e)
 		{
@@ -47,20 +45,6 @@ public final class Main
 		}
 		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
 		
-		
-		User user = new User("Eduard", "slinkydinky", "eduardDestroyer@free6.com");
-		Order order = new Order(user);
-		List<Product> prodList = new ArrayList<Product>();
-		prodList.add(new Product("apple", "green freshly picked grannie smith", 0));
-		prodList.add(new Product("carrot", "rich orange newly picked", 1));
-		prodList.add(new Product("MacBookPro2015", "i5 2560k, 8gb RAM, 256GB SSD, big edition", 2));
-		prodList.add(new Product("sourcream", "vibrant white", 3));
-		
-
-		order.addProduct(prodList);
-		eCom.add(user);
-		eCom.add(order);
-		eCom.add(prodList);
 		
 		
 		System.out.println(eCom);

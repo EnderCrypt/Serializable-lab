@@ -1,19 +1,19 @@
-package com.github.serializable.collection.data;
+package com.github.serializable.service;
 
 import java.io.Serializable;
 
 /**
  * this is the public user object that will be saved/loaded by the application
  */
-public class User implements Serializable
+public class User extends Id implements Serializable
 {
 	private static final long serialVersionUID = -4836684853320153893L;
 	private String username;
 	private String password;
 	private String email;
-	private int orderIndex = 0;
+	private int userId;
 
-	public User(String username, String password, String email)
+	User(String username, String password, String email)
 	{
 		this.username = username;
 		this.password = password;
@@ -35,9 +35,9 @@ public class User implements Serializable
 		return email;
 	}
 	
-	int newOrderId()
+	public int getUserId()
 	{
-		return ++orderIndex;
+		return userId;
 	}
 
 	@Override
@@ -50,19 +50,16 @@ public class User implements Serializable
 		if (other instanceof User)
 		{
 			User otherUser = (User) other;
-			return username.equals(otherUser.username) || email.equals(otherUser.email);
+			if(super.equals(otherUser))
+			{
+				return true;//returns true if same ID as by Id.class
+			}
+			return getUsername().equalsIgnoreCase(otherUser.getUsername()) 
+					|| getEmail().equalsIgnoreCase(otherUser.getEmail());
 		}
 		return false;
 	}
 
-	@Override
-	public int hashCode()
-	{
-		int result = 1;
-		result += username.hashCode() * 37;
-
-		return result;
-	}
 	
 	@Override
 	public String toString()
