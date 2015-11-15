@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.github.serializable.collection.file.FileRepository;
 import com.github.serializable.collection.storage.StorageRepository;
+import com.github.serializable.passwordvalidation.validators.DefaultPasswordValidator;
 import com.github.serializable.service.ECommerceService;
 import com.github.serializable.service.Order;
 import com.github.serializable.service.Product;
@@ -43,8 +44,7 @@ public final class Main
 			System.err.println("Failed to create files properly");
 			e.printStackTrace();
 		}
-		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
-		
+		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep, new DefaultPasswordValidator());
 		
 		
 		System.out.println(eCom);

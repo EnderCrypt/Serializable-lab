@@ -2,6 +2,9 @@ package com.github.serializable.service;
 
 
 import com.github.serializable.collection.storage.StorageRepository;
+import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
+import com.github.serializable.passwordvalidation.PasswordValidationService;
+import com.github.serializable.passwordvalidation.PasswordValidator;
 
 /**
  * the main ECommerce object, handles order/product/users and checks that all is
@@ -19,27 +22,31 @@ public class ECommerceService
 	private StorageRepository<User> userRep;
 	private StorageRepository<Product> prodRep;
 	private StorageRepository<Order> orderRep;
+	
+	private PasswordValidationService passwordValidator;
+	
 	private static final int MAX_USERNAME_LENGTH = 30;
 	
-	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep)
+	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep, PasswordValidator passwordValidater)
 	{
 		this.userRep = userRep;
 		this.prodRep = prodRep;
 		this.orderRep = orderRep;
+		this.passwordValidator = new PasswordValidationService(passwordValidater);
 	}
 	
 	//--Users
-	public void add(User user)
+	public void add(User user) throws PasswordRequirmentsNotMet
 	{
 		if(user.getUsername().length() > MAX_USERNAME_LENGTH)
 		{
 			throw new IllegalArgumentException("Cannot contain more than " + MAX_USERNAME_LENGTH + " characters");
 		}
-		//TODO: password criteria
+		passwordValidator.validate(user.getPassword()); // will throw exceptions if password requirments arent met
 		userRep.createUnit(user);
 	}
 	
-	public User newUser(String name, String password, String email)
+	public User newUser(String name, String password, String email) throws PasswordRequirmentsNotMet
 	{
 		User user = new User(name, password, email);
 		add(user);
