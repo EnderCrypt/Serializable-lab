@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.github.serializable.collection.file.FileRepository;
 import com.github.serializable.collection.storage.StorageRepository;
-import com.github.serializable.passwordvalidation.validators.DefaultPasswordValidator;
 import com.github.serializable.service.ECommerceService;
 import com.github.serializable.service.Order;
 import com.github.serializable.service.Product;
