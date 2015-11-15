@@ -5,6 +5,7 @@ import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
 import com.github.serializable.passwordvalidation.PasswordValidationService;
 import com.github.serializable.passwordvalidation.PasswordValidator;
+import com.github.serializable.passwordvalidation.validators.DefaultPasswordValidator;
 
 /**
  * the main ECommerce object, handles order/product/users and checks that all is
@@ -27,12 +28,17 @@ public class ECommerceService
 	
 	private static final int MAX_USERNAME_LENGTH = 30;
 	
-	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep, PasswordValidator passwordValidater)
+	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep)
 	{
 		this.userRep = userRep;
 		this.prodRep = prodRep;
 		this.orderRep = orderRep;
-		this.passwordValidator = new PasswordValidationService(passwordValidater);
+		changePasswordValidator(new DefaultPasswordValidator());
+	}
+	
+	public void changePasswordValidator(PasswordValidator passwordValidater)
+	{
+		passwordValidator = new PasswordValidationService(passwordValidater);
 	}
 	
 	//--Users

@@ -42,7 +42,7 @@ public final class Main
 			System.err.println("Failed to create files properly");
 			e.printStackTrace();
 		}
-		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep, new DefaultPasswordValidator());
+		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
 		
 		
 		System.out.println(eCom);
