@@ -1,5 +1,12 @@
 package com.github.serializable.passwordvalidation;
 
+/**
+ * @author EnderCrypt
+ * This is the main password validation service, it requires a passwordValidator class to function
+ * any class can implement the PasswordValidator interface and be sent in
+ * the password validator is what is used to test if a password is valid, and can throw a
+ * PasswordRequirmentsNotMet exception if the password breaks any rule
+ */
 public class PasswordValidationService
 {
 	private PasswordValidator passwordValidator;
@@ -9,6 +16,11 @@ public class PasswordValidationService
 		this.passwordValidator = passwordValidator;
 	}
 
+	/**
+	 * this is the method that checks if a password string is valid and follows the rules of the passwordValidator
+	 * @param a string representation of the password that is to be checked
+	 * @throws PasswordRequirmentsNotMet
+	 */
 	public synchronized void validate(String password) throws PasswordRequirmentsNotMet
 	{
 		passwordValidator.reset();

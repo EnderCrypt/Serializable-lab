@@ -3,6 +3,11 @@ package com.github.serializable.passwordvalidation.validators;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
 import com.github.serializable.passwordvalidation.PasswordValidator;
 
+/**
+ * @author EnderCrypt
+ * this is the default password validator, all password validators need to implement the
+ * PasswordValidator interface
+ */
 public class DefaultPasswordValidator implements PasswordValidator
 {
 	private int capitalLetters; // count of capitalLetters
