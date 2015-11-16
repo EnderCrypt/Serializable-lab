@@ -1,6 +1,9 @@
 package com.github.serializable.service;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
 import com.github.serializable.passwordvalidation.PasswordValidationService;
@@ -64,9 +67,17 @@ public class ECommerceService
 	}
 	
 	//--Orders
-	public void add(Order order)
+	public void add(Order order) 
 	{
 		//add order to orderRep
+		/*
+		 * check to be made:
+		 * - order cannot be created with no user
+		 * - order cannot be created with no products contained
+		 * - order cannot be created with a total value of >50k
+		 * - order cannot be created with products without ID
+		 */
+		orderRep.createUnit(order);
 	}
 	public void addAll(Order[] orderList)
 	{
@@ -83,6 +94,13 @@ public class ECommerceService
 		//add every products from list to prodRep
 	}
 	
+	public Set<Order> getAllOrders(User user)
+	{
+		//TODO: Not yet finished
+		// - user shall return 
+		return new HashSet<>();
+	}
+
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();

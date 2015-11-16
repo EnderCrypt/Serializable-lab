@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import com.github.serializable.collection.file.FileRepository;
 import com.github.serializable.collection.storage.StorageRepository;
+import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
+import com.github.serializable.passwordvalidation.PasswordValidationService;
+import com.github.serializable.passwordvalidation.PasswordValidator;
 import com.github.serializable.service.ECommerceService;
 import com.github.serializable.service.Order;
 import com.github.serializable.service.Product;
@@ -11,13 +14,16 @@ import com.github.serializable.service.User;
 
 
 /*STATUS: 29/10-15 01:50
- * Endast via EComService får vi säga åt FileXxxRepository att spara till minnet. 
+ * Endast via EComService får vi säga åt FileRepository att spara till minnet. 
  * Anledning för icke-tomma Repository/Xxx/data filer är pga att en tom HashSet läggs
  *  på disk automatiskt (via klass implementationerna, FileXxxRepository).
  * 
  * TODO: 
  * - finish eComService methods
- * 		 
+ * - User/Product/Order.class not dependant on ID
+ * - only eCommerce shall assign orders to users
+ * - orders may have assigned products without ecommerce logics
+ * - check TODOs on Tasks window (Window->Show View->Tasks)
  * 		
  */
 
@@ -42,7 +48,6 @@ public final class Main
 			e.printStackTrace();
 		}
 		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
-		
 		
 		System.out.println(eCom);
 	}

@@ -11,14 +11,14 @@ public class Product extends Id implements Serializable
 	private static final long serialVersionUID = 525630403812799901L;
 	private String name;
 	private String productDescription;
-	private double value;
+	private double price;
 
 	//default constructor ensures only eCommerce can create new instances
-	Product(String name, String productDescription, int productID, double value)
+	Product(String name, String productDescription, double price)
 	{
 		this.name = name;
 		this.productDescription = productDescription;
-		this.value = value;
+		this.price = price;
 	}
 
 	public String getProductName()
@@ -31,9 +31,9 @@ public class Product extends Id implements Serializable
 		return productDescription;
 	}
 
-	public double getValue()
+	public double getPrice()
 	{
-		return value;
+		return price;
 	}
 	
 	@Override

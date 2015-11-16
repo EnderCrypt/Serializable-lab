@@ -12,13 +12,8 @@ import java.util.Set;
 public class Order extends Id implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
-	private String buyer;
+	private int buyerId;
 	Set<Integer> products = new HashSet<>();
-	
-	Order(User user)
-	{
-		buyer = user.getUsername();
-	}
 	
 	public Order addProduct(List<Product> productList)
 	{
@@ -26,7 +21,6 @@ public class Order extends Id implements Serializable
 		{
 			addProduct(product);
 		}
-		
 		return this;
 	}
 	
@@ -36,9 +30,9 @@ public class Order extends Id implements Serializable
 		return this;
 	}
 	
-	public String getBuyer()
+	public int getBuyerId()
 	{
-		return buyer;
+		return buyerId;
 	}
 	
 

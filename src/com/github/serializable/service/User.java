@@ -1,6 +1,8 @@
 package com.github.serializable.service;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * this is the public user object that will be saved/loaded by the application
@@ -12,6 +14,7 @@ public class User extends Id implements Serializable
 	private String password;
 	private String email;
 	private int userId;
+	private Set<Integer> orderIdSet = new HashSet<>();
 
 	User(String username, String password, String email)
 	{
@@ -39,6 +42,12 @@ public class User extends Id implements Serializable
 	{
 		return userId;
 	}
+	
+	void addOrder(Order order)
+	{
+		orderIdSet.add(order.getId());
+	}
+	
 
 	@Override
 	public boolean equals(Object other)

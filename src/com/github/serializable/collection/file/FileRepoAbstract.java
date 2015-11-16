@@ -18,7 +18,6 @@ public abstract class FileRepoAbstract<T>
 	protected File saveFile;
 	protected Set<T> set = new HashSet<>();
 	
-	
 	public FileRepoAbstract(String directory) throws IOException
 	{
 		// init variables
@@ -76,7 +75,6 @@ public abstract class FileRepoAbstract<T>
 		}
 		catch (IOException e)
 		{
-			
 		}
 	}
 	
@@ -89,7 +87,5 @@ public abstract class FileRepoAbstract<T>
 	int nextId()
 	{
 		return id++;
-	}
-
-	
-}
+	}	
+}//class

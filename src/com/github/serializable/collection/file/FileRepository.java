@@ -18,7 +18,10 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 	@Override
 	public void createUnit(T unit)
 	{
-		unit.setId(nextId());
+		if(!unit.hasId())
+		{
+			unit.setId(nextId());
+		}
 		set.add(unit);
 	}
 
@@ -35,15 +38,13 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 	@Override
 	public void deleteUnit(T unit)
 	{
-		if (set.contains(unit))
-		{
-			set.remove(unit);
-		}
+		set.remove(unit);
 	}
 	
 	@Override
 	public T getUnitById(int id)
 	{
+		//TODO: by shitvard
 		//if set contains unit.getId
 		//return the unit with id
 		return null;
