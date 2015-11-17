@@ -16,7 +16,7 @@ public class User extends Id implements Serializable
 	private int userId;
 	private Set<Integer> orderIdSet = new HashSet<>();
 
-	User(String username, String password, String email)
+	public User(String username, String password, String email)
 	{
 		this.username = username;
 		this.password = password;
@@ -48,6 +48,10 @@ public class User extends Id implements Serializable
 		orderIdSet.add(order.getId());
 	}
 	
+	public Set<Integer> getOrderIdSet()
+	{
+		return new HashSet<>(orderIdSet);
+	}
 
 	@Override
 	public boolean equals(Object other)

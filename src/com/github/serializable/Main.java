@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import com.github.serializable.collection.file.FileRepository;
 import com.github.serializable.collection.storage.StorageRepository;
-import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
-import com.github.serializable.passwordvalidation.PasswordValidationService;
-import com.github.serializable.passwordvalidation.PasswordValidator;
 import com.github.serializable.service.ECommerceService;
 import com.github.serializable.service.Order;
 import com.github.serializable.service.Product;
@@ -20,11 +17,9 @@ import com.github.serializable.service.User;
  * 
  * TODO: 
  * - finish eComService methods
- * - User/Product/Order.class not dependant on ID
- * - only eCommerce shall assign orders to users
- * - orders may have assigned products without ecommerce logics
+ * - User/Product/Order.class not dependant on ID. FileRepository assigns ID upon creation to file
  * - check TODOs on Tasks window (Window->Show View->Tasks)
- * 		
+ * 	
  */
 
 public final class Main
@@ -48,6 +43,9 @@ public final class Main
 			e.printStackTrace();
 		}
 		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
+//		Order newOrder = new Order(user);
+//		newOrder.addProduct(productList);
+//		eCom.add(newOrder);
 		
 		System.out.println(eCom);
 	}

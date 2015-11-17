@@ -16,8 +16,6 @@ import com.github.serializable.passwordvalidation.validators.DefaultPasswordVali
  *
  * TODO: rewrite whole ECommerce.
  * - all other files are complete as it is only the ecommerce class that needs to handle logics
- * -addSet of user/prod/order -- TIMMIE
- * -add single of user/p/o -- TIMMIE
  * -
  *
  */
@@ -55,12 +53,6 @@ public class ECommerceService
 		userRep.createUnit(user);
 	}
 	
-	public User newUser(String name, String password, String email) throws PasswordRequirmentsNotMet
-	{
-		User user = new User(name, password, email);
-		add(user);
-		return user;
-	}
 	public void addAll(User[] userList) throws PasswordRequirmentsNotMet
 	{
 		//add every user from list to userRep
@@ -88,24 +80,16 @@ public class ECommerceService
 			// throw new InvalidUserIDException(); ????
 		}
 		
-		//Order with no ID
-		if(order.products.isEmpty())
+		//Order with empty set of products
+		if(order.productIdSet.isEmpty())
 		{
-			throw new IllegalArgumentException("Order must contain atleast one product");
+			throw new NullPointerException("Order must contain atleast one product");
 		}
 		
-		//Order value over 50k
-		//if(order.addProduct(product))
-		{
-			// Throw new orderValueException(); ?????
-		}
-		
-		//Order with no product ID
-		//if(order.addProduc)
-		{
-			
-		}
-		
+//		Order value over 50k
+//		get Order.getTotalPrice() and see if it is more than 50k
+		//if(ordervalue>50k)
+		//throw new PriceOutOfBoundsException(""); //skapa exception klassen oxå, av runtime exception
 		orderRep.createUnit(order);
 	}
 	public void addAll(Order[] orderList)
@@ -119,11 +103,6 @@ public class ECommerceService
 	//--Products
 	public void add(Product product)
 	{
-		if(product.hasId() == false)
-		{
-			//product with no id error
-		}
-		
 		if(product.getProductName().isEmpty())
 		{
 			//no product name error
@@ -136,7 +115,7 @@ public class ECommerceService
 		
 		if(product.getPrice() <= 0)
 		{
-			// price error
+			//throw new PriceOutOfBoundsException("");
 		}
 		prodRep.createUnit(product);
 	}
@@ -149,11 +128,27 @@ public class ECommerceService
 		}
 	}
 	
+	/**
+	 * 
+	 * By retrieving the buyer id of each order in the orderRep, consolidate every assigned order and return a new list containing every order
+	 *  for the user in argument
+	 *  
+	 *  So by example:
+	 *  <p> {@code ECommerceService eCom = new ECommerceService(..., ..., ...) }
+	 *  <p> {@code User user = new User(); } 
+	 *  <p> {@code Order order1 = new Order(user); }
+	 *  <p> {@code Order order2 = new Order(user); }
+	 *  <p> {@code Order order3 = new Order(user); }
+	 *  <p> {@code eCom.add(order1); eCom.add(order2); eCom.add(order3); } 
+	 *  <p> {@code eCom.getAllOrders(user) //<- returns hashSet }
+	 *  
+	 * @param user
+	 * @return new set of Order objects by getting every order object associated with user
+	 */
 	public Set<Order> getAllOrders(User user)
 	{
-		//TODO: Not yet finished
-		// - user shall return 
-		return new HashSet<>();
+		//TODO: Not yet finished todo by Edward
+		return null; //new HashSet<>(ordersFromUser);
 	}
 
 	public String toString()

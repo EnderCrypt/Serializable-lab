@@ -14,7 +14,7 @@ public class Product extends Id implements Serializable
 	private double price;
 
 	//default constructor ensures only eCommerce can create new instances
-	Product(String name, String productDescription, double price)
+	public Product(String name, String productDescription, double price)
 	{
 		this.name = name;
 		this.productDescription = productDescription;
