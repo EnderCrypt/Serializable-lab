@@ -61,9 +61,13 @@ public class ECommerceService
 		add(user);
 		return user;
 	}
-	public void addAll(User[] userList)
+	public void addAll(User[] userList) throws PasswordRequirmentsNotMet
 	{
 		//add every user from list to userRep
+		for(User user : userList)
+		{
+			add(user);
+		}
 	}
 	
 	//--Orders
@@ -77,21 +81,53 @@ public class ECommerceService
 		 * - order cannot be created with a total value of >50k
 		 * - order cannot be created with products without ID
 		 */
+		
+		//Order with no user ID
+		if(order.getBuyerId() == -1)
+		{
+			// throw new InvalidUserIDException(); ????
+		}
+		
+		//Order with no ID
+		if(order.products.isEmpty())
+		{
+			throw new IllegalArgumentException("Order must contain atleast one product");
+		}
+		
+		//Order value over 50k
+		//if(order.addProduct(product))
+		{
+			// Throw new orderValueException(); ?????
+		}
+		
+		//Order with no product ID
+		//if(order.addProduc)
+		{
+			
+		}
+		
 		orderRep.createUnit(order);
 	}
 	public void addAll(Order[] orderList)
 	{
-		//add every order from list to orderRep
+		for(Order order : orderList)
+		{
+			add(order);
+		}
 	}
 	
 	//--Products
 	public void add(Product product)
 	{
-		//add product to prodRep
+		
 	}
-	public void addAll(Product productList)
+	public void addAll(Product[] productList)
 	{
 		//add every products from list to prodRep
+		for(Product product : productList)
+		{
+			add(product);
+		}
 	}
 	
 	public Set<Order> getAllOrders(User user)
