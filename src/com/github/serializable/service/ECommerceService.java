@@ -119,7 +119,26 @@ public class ECommerceService
 	//--Products
 	public void add(Product product)
 	{
+		if(product.hasId() == false)
+		{
+			//product with no id error
+		}
 		
+		if(product.getProductName().isEmpty())
+		{
+			//no product name error
+		}
+		
+		if(product.getProductDescription().isEmpty())
+		{
+			//no product description error
+		}
+		
+		if(product.getPrice() <= 0)
+		{
+			// price error
+		}
+		prodRep.createUnit(product);
 	}
 	public void addAll(Product[] productList)
 	{
