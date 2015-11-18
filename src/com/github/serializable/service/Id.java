@@ -15,7 +15,7 @@ public class Id
 	
 	public boolean hasId()
 	{
-		return id>0;
+		return id >= 0;
 	}
 	
 	@Override
