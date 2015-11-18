@@ -52,8 +52,6 @@ public class Order extends Id implements Serializable
 	{
 		return totalCost;
 	}
-	
-	
 
 	@Override
 	public String toString()
