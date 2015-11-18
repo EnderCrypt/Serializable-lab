@@ -1,6 +1,9 @@
 package com.github.serializable.collection.file;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.service.Id;
 
@@ -49,5 +52,12 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 		//if set contains unit.getId
 		//return the unit with id
 		return null;
+	}
+	
+	@Override
+	public Set<T> getAllUnits()
+	{
+		// TODO Auto-generated method stub
+		return new HashSet<T>(set);
 	}
 }

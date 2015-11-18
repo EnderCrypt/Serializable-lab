@@ -1,8 +1,6 @@
 package com.github.serializable.service;
 
 import java.io.IOException;
-import java.util.Random;
-
 import com.github.serializable.collection.file.FileRepository;
 import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;

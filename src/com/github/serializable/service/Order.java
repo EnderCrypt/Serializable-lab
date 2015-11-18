@@ -58,8 +58,6 @@ public class Order extends Id implements Serializable
 	@Override
 	public String toString()
 	{
-		return getId() + " - " + (productIdSet.toString().isEmpty() //if products are null or showing empty array
-				? "Order " + getId() + " does not contain any products!" //if true
-						: productIdSet.toString()); //if false
+		return getId() + " - " + productIdSet.toString();
 	}
 }

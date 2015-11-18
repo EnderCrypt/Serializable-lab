@@ -1,5 +1,7 @@
 package com.github.serializable.collection.storage;
 
+import java.util.Set;
+
 public interface StorageRepository<T> 
 {
 	/**
@@ -23,6 +25,11 @@ public interface StorageRepository<T>
 	 * @return <T> unit
 	 */
 	public T getUnitById(int id);
+	/**
+	 * Retrieves every unit from the specified repository
+	 * @return <tt>Set<T></tt> of all units in current repository
+	 */
+	public Set<T> getAllUnits();
 	
 	
 }

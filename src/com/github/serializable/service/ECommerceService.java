@@ -152,6 +152,7 @@ public class ECommerceService
 	public Set<Order> getAllOrders(User user)
 	{
 		//TODO: Not yet finished todo by Edward
+		//ex. loop through every order in orderRepo.getAllUnits and look if the buyer id of each object matches user.getId
 		return null; //new HashSet<>(ordersFromUser);
 	}
 
