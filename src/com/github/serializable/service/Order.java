@@ -15,7 +15,7 @@ public class Order extends Id implements Serializable
 {
 	private static final long serialVersionUID = -3520138447015383264L;
 	private int buyerId;
-	private int totalCost = 0;
+	private double totalCost = 0;
 	Set<Integer> productIdSet = new HashSet<>();
 	
 	public Order(User user)
@@ -48,7 +48,7 @@ public class Order extends Id implements Serializable
 		return buyerId;
 	}
 	
-	public int getTotalCost()
+	public double getTotalCost()
 	{
 		return totalCost;
 	}
