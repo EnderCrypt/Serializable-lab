@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.serializable.collection.storage.StorageRepository;
+import com.github.serializable.exceptions.PriceOutOfBoundsException;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
 import com.github.serializable.passwordvalidation.PasswordValidationService;
 import com.github.serializable.passwordvalidation.PasswordValidator;
@@ -25,9 +26,11 @@ public class ECommerceService
 	private StorageRepository<Product> prodRep;
 	private StorageRepository<Order> orderRep;
 	
+	
 	private PasswordValidationService passwordValidator;
 	
 	private static final int MAX_USERNAME_LENGTH = 30;
+	private static final int MAX_COST = 50000;
 	
 	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep)
 	{
@@ -88,8 +91,11 @@ public class ECommerceService
 		
 //		Order value over 50k
 //		get Order.getTotalPrice() and see if it is more than 50k
-		//if(ordervalue>50k)
-		//throw new PriceOutOfBoundsException(""); //skapa exception klassen oxå, av runtime exception
+		if(order.getTotalCost() >= MAX_COST)
+		{
+			throw new PriceOutOfBoundsException("Order price must be under " + MAX_COST); //skapa exception klassen oxå, av runtime exception
+		}
+	
 		orderRep.createUnit(order);
 	}
 	public void addAll(Order[] orderList)
@@ -103,19 +109,19 @@ public class ECommerceService
 	//--Products
 	public void add(Product product)
 	{
-		if(product.getProductName().isEmpty())
+		if(product.getProductName() == null || product.getProductName().isEmpty())
 		{
-			//no product name error
+			throw new NullPointerException("Product name must not be empty or null");
 		}
 		
-		if(product.getProductDescription().isEmpty())
+		if(product.getProductDescription() == null || product.getProductDescription().isEmpty())
 		{
-			//no product description error
+			throw new NullPointerException("Product description must not be empty or null");
 		}
 		
-		if(product.getPrice() <= 0)
+		if(product.getPrice() <= 0 || product.getPrice() >= MAX_COST)
 		{
-			//throw new PriceOutOfBoundsException("");
+			throw new PriceOutOfBoundsException("Price must be more than 0 or under " + MAX_COST);
 		}
 		prodRep.createUnit(product);
 	}
