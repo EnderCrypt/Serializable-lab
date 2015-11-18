@@ -90,7 +90,6 @@ public class ECommerceService
 		}
 		
 //		Order value over 50k
-//		get Order.getTotalPrice() and see if it is more than 50k
 		if(order.getTotalCost() >= MAX_COST)
 		{
 			throw new PriceOutOfBoundsException("Order price must be under " + MAX_COST); //skapa exception klassen oxå, av runtime exception
