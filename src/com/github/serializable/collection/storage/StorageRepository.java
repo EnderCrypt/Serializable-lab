@@ -1,6 +1,6 @@
 package com.github.serializable.collection.storage;
 
-public interface StorageRepository<T>
+public interface StorageRepository<T> 
 {
 	/**
 	 * Creates <tt>unit</tt> with specified type (by implementation) and adds it to the specified repository.
@@ -23,4 +23,6 @@ public interface StorageRepository<T>
 	 * @return <T> unit
 	 */
 	public T getUnitById(int id);
+	
+	
 }
