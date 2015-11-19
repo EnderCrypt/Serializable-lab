@@ -13,7 +13,7 @@ public class Product extends Id implements Serializable
 	private String productDescription;
 	private double price;
 
-	//default constructor ensures only eCommerce can create new instances
+	// default constructor ensures only eCommerce can create new instances
 	public Product(String name, String productDescription, double price)
 	{
 		this.name = name;
@@ -25,7 +25,7 @@ public class Product extends Id implements Serializable
 	{
 		return name;
 	}
-	
+
 	public String getProductDescription()
 	{
 		return productDescription;
@@ -35,13 +35,11 @@ public class Product extends Id implements Serializable
 	{
 		return price;
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return getId() + " : " + getProductName() + " : " + getProductDescription() + "\n";
 	}
-	
-	
 
 }

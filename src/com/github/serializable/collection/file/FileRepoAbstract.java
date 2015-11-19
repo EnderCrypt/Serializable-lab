@@ -86,6 +86,7 @@ public abstract class FileRepoAbstract<T>
 	
 	int nextId()
 	{
-		return id++;
-	}	
-}//class
+		return ++id;
+	}
+	
+}
