@@ -28,8 +28,8 @@ public class ECommerceService
 	
 	private PasswordValidationService passwordValidator;
 	
-	private static final int MAX_USERNAME_LENGTH = 30;
-	private static final int MAX_COST = 50000;
+	public static final int MAX_USERNAME_LENGTH = 30;
+	public static final int MAX_COST = 50000;
 	
 	public ECommerceService(StorageRepository<User> userRep, StorageRepository<Product> prodRep, StorageRepository<Order> orderRep)
 	{

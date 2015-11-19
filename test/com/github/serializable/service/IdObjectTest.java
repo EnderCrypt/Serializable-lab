@@ -1,14 +1,8 @@
 package com.github.serializable.service;
 
 import static org.junit.Assert.*;
-
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.github.serializable.collection.file.FileRepository;
-import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
 
 public class IdObjectTest
