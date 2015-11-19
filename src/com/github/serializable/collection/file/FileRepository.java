@@ -45,9 +45,16 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 	@Override
 	public T getUnitById(int id)
 	{
-		//TODO: by shitvard
-		//if set contains unit.getId
-		//return the unit with id
+		for(T unit : set)
+		{
+			if(unit.getId() == id)
+			{
+				return unit;
+			}
+		}
 		return null;
 	}
+	
+	
+
 }

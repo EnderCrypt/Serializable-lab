@@ -152,8 +152,13 @@ public class ECommerceService
 	 */
 	public Set<Order> getAllOrders(User user)
 	{
+		Set<Order> orders = new HashSet<>();
+		for(int orderId : user.getOrderIdSet())
+		{
+			orders.add(orderRep.getUnitById(orderId));
+		}
 		//TODO: Not yet finished todo by Edward
-		return null; //new HashSet<>(ordersFromUser);
+		return orders; //new HashSet<>(ordersFromUser);
 	}
 
 	public String toString()
