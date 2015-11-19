@@ -37,17 +37,17 @@ public class User extends Id implements Serializable
 	{
 		return email;
 	}
-	
+
 	public int getUserId()
 	{
 		return userId;
 	}
-	
+
 	void addOrder(Order order)
 	{
 		orderIdSet.add(order.getId());
 	}
-	
+
 	public Set<Integer> getOrderIdSet()
 	{
 		return new HashSet<>(orderIdSet);
@@ -63,17 +63,16 @@ public class User extends Id implements Serializable
 		if (other instanceof User)
 		{
 			User otherUser = (User) other;
-			if(super.equals(otherUser))
+			if (super.equals(otherUser))
 			{
-				return true;//returns true if same ID as by Id.class
+				return true;// returns true if same ID as by Id.class
 			}
-			return getUsername().equalsIgnoreCase(otherUser.getUsername()) 
+			return getUsername().equalsIgnoreCase(otherUser.getUsername())
 					|| getEmail().equalsIgnoreCase(otherUser.getEmail());
 		}
 		return false;
 	}
 
-	
 	@Override
 	public String toString()
 	{
