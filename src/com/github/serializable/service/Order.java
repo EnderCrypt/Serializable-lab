@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.github.serializable.exceptions.ArgumentIdException;
+import com.github.serializable.exceptions.InvalidIDException;
 
 /**
  * this is the public order object that will be saved/loaded by the application
@@ -17,16 +17,16 @@ public class Order extends Id implements Serializable
 	private int buyerId;
 	private double totalCost = 0;
 	Set<Integer> productIdSet = new HashSet<>();
-	
+
 	public Order(User user)
 	{
-		if(!user.hasId())
+		if (!user.hasId())
 		{
-			throw new ArgumentIdException("User has no Id!");
+			throw new InvalidIDException("User has no Id!");
 		}
 		buyerId = user.getId();
 	}
-	
+
 	public Order addProduct(List<Product> productList)
 	{
 		for (Product product : productList)
@@ -35,31 +35,27 @@ public class Order extends Id implements Serializable
 		}
 		return this;
 	}
-	
+
 	public Order addProduct(Product product)
 	{
 		productIdSet.add(product.getId());
-		totalCost+=product.getPrice();
+		totalCost += product.getPrice();
 		return this;
 	}
-	
+
 	public int getBuyerId()
 	{
 		return buyerId;
 	}
-	
+
 	public double getTotalCost()
 	{
 		return totalCost;
 	}
-	
-	
 
 	@Override
 	public String toString()
 	{
-		return getId() + " - " + (productIdSet.toString().isEmpty() //if products are null or showing empty array
-				? "Order " + getId() + " does not contain any products!" //if true
-						: productIdSet.toString()); //if false
+		return getId() + " - " + productIdSet.toString();
 	}
 }

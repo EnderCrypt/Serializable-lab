@@ -18,5 +18,5 @@ public class PriceOutOfBoundsException extends RuntimeException
 	{
 		super(cause);
 	}
-	
+
 }
