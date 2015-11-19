@@ -44,7 +44,7 @@ public class ECommerceService
 	}
 
 	// --Users
-	public void add(User user) throws PasswordRequirmentsNotMet
+	public User add(User user) throws PasswordRequirmentsNotMet
 	{
 		if (user.getUsername().length() > MAX_USERNAME_LENGTH)
 		{
@@ -53,20 +53,23 @@ public class ECommerceService
 		passwordValidator.validate(user.getPassword()); // will throw exceptions
 														// if password
 														// requirments arent met
-		userRep.createUnit(user);
+		return userRep.createUnit(user);
 	}
 
-	public void addAll(User[] userList) throws PasswordRequirmentsNotMet
+	public User[] addAll(User[] userList) throws PasswordRequirmentsNotMet
 	{
-		// add every user from list to userRep
+		User[] newList = new User[userList.length];
+		int i = 0;
 		for (User user : userList)
 		{
-			add(user);
+			newList[i] = add(user);
+			i++;
 		}
+		return newList;
 	}
 
 	// --Orders
-	public void add(Order order)
+	public Order add(Order order)
 	{
 		// add order to orderRep
 		/*
@@ -94,19 +97,23 @@ public class ECommerceService
 			throw new PriceOutOfBoundsException("Order price must be under " + MAX_COST);
 		}
 
-		orderRep.createUnit(order);
+		return orderRep.createUnit(order);
 	}
 
-	public void addAll(Order[] orderList)
+	public Order[] addAll(Order[] orderList)
 	{
+		Order[] newList = new Order[orderList.length];
+		int i = 0;
 		for (Order order : orderList)
 		{
-			add(order);
+			newList[i] = add(order);
+			i++;
 		}
+		return newList;
 	}
 
 	// --Products
-	public void add(Product product)
+	public Product add(Product product)
 	{
 		if (product.getProductName() == null || product.getProductName().isEmpty())
 		{
@@ -123,16 +130,19 @@ public class ECommerceService
 			throw new PriceOutOfBoundsException("Price must be more than 0 or under " + MAX_COST);
 		}
 
-		prodRep.createUnit(product);
+		return prodRep.createUnit(product);
 	}
 
-	public void addAll(Product[] productList)
+	public Product[] addAll(Product[] productList)
 	{
-		// add every products from list to prodRep
-		for (Product product : productList)
+		Product[] newList = new Product[productList.length];
+		int i = 0;
+		for (Product product : newList)
 		{
-			add(product);
+			newList[i] = add(product);
+			i++;
 		}
+		return newList;
 	}
 
 	/**

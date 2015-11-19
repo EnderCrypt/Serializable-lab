@@ -43,9 +43,7 @@ public final class Main
 			e.printStackTrace();
 		}
 		ECommerceService eCom = new ECommerceService(userRep, productRep, orderRep);
-//		Order newOrder = new Order(user);
-//		newOrder.addProduct(productList);
-//		eCom.add(newOrder);
+		
 		
 		System.out.println(eCom);
 	}

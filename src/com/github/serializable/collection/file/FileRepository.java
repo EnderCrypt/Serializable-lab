@@ -20,29 +20,32 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 
 	
 	@Override
-	public void createUnit(T unit)
+	public T createUnit(T unit)
 	{
 		if(!unit.hasId())
 		{
 			unit.setId(nextId());
 		}
 		set.add(unit);
+		return unit;
 	}
 
 	@Override
-	public void updateUnit(T unit)
+	public T updateUnit(T unit)
 	{
 		if (set.contains(unit))
 		{
 			set.remove(unit);
 			set.add(unit);
 		}
+		return unit;
 	}
 
 	@Override
-	public void deleteUnit(T unit)
+	public T deleteUnit(T unit)
 	{
 		set.remove(unit);
+		return unit;
 	}
 	
 	@Override
