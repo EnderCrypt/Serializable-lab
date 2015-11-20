@@ -1,6 +1,7 @@
 package com.github.serializable.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ public class Order extends Id implements Serializable
 	private static final long serialVersionUID = -3520138447015383264L;
 	private int buyerId;
 	private double totalCost = 0;
-	Set<Integer> productIdSet = new HashSet<>();
+	List<Integer> productIdSet = new ArrayList<>();
 
 	public Order(User user)
 	{
