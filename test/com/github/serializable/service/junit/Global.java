@@ -1,4 +1,4 @@
-package com.github.serializable.service;
+package com.github.serializable.service.junit;
 
 import java.io.IOException;
 import com.github.serializable.collection.file.FileRepository;

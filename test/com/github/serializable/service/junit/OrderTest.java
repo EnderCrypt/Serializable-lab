@@ -1,4 +1,4 @@
-package com.github.serializable.service;
+package com.github.serializable.service.junit;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.github.serializable.exceptions.PriceOutOfBoundsException;
+import com.github.serializable.service.Order;
+import com.github.serializable.service.Product;
+import com.github.serializable.service.User;
 
 public class OrderTest
 {

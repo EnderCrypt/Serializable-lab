@@ -1,9 +1,12 @@
-package com.github.serializable.service;
+package com.github.serializable.service.junit;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
+import com.github.serializable.service.Order;
+import com.github.serializable.service.Product;
+import com.github.serializable.service.User;
 
 public class IdObjectTest
 {
