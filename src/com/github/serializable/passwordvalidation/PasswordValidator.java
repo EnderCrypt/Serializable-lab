@@ -2,7 +2,7 @@ package com.github.serializable.passwordvalidation;
 
 /**
  * @author EnderCrypt
- * this is the password validator interface that allow you to create your own password validators
+ * this is the <tt>PasswordValidator</tt> interface that allow you to create your own password validators
  * for passwordValidationService 
  */
 public interface PasswordValidator
@@ -20,8 +20,8 @@ public interface PasswordValidator
 	 */
 	public void register(char c) throws PasswordRequirmentsNotMet;
 	/**
-	 * this is the final method which is called once the whole password has gona through, allowing you to do
-	 * a final check on all values and throw the PasswordRequirmentsNotMet exception if any rules are violated
+	 * this is the final method which is called once the whole password has gonna through, allowing you to do
+	 * a final check on all values and throw the <tt>PasswordRequirmentsNotMet</tt> exception if any rules are violated
 	 * @throws PasswordRequirmentsNotMet
 	 */
 	public void validate() throws PasswordRequirmentsNotMet;

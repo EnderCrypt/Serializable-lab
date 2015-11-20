@@ -35,7 +35,6 @@ public class Global // not a JUnit test file
 	
 	public static char generateLetter(boolean capital)
 	{
-		char result;
 		if (capital)
 			return (char) (65+Math.random()*(90-65));
 		else
