@@ -26,23 +26,15 @@ public class OrderTestManual
 	private ECommerceService eCom;
 	
 	@Before
-	public void init()
+	public void init() throws IOException
 	{
 		StorageRepository<User> userRep = null;
 		StorageRepository<Product> productRep = null;
 		StorageRepository<Order> orderRep = null;
-		try
-		{
-			// create file repositories
-			userRep = new FileRepository<>("TestRepository/User/");
-			orderRep = new FileRepository<>("TestRepository/Order/");
-			productRep = new FileRepository<>("TestRepository/Product/");
-		}
-		catch (IOException e)
-		{
-			System.err.println("Failed to create files properly");
-			e.printStackTrace();
-		}
+		// create file repositories
+		userRep = new FileRepository<>("TestRepository/User/");
+		orderRep = new FileRepository<>("TestRepository/Order/");
+		productRep = new FileRepository<>("TestRepository/Product/");
 		eCom = new ECommerceService(userRep, productRep, orderRep);
 	}
 	

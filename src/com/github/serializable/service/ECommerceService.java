@@ -86,9 +86,9 @@ public class ECommerceService
 		}
 
 		// Order with empty set of products
-		if (order.productIdSet.isEmpty())
+		if (order.productIdSet == null || order.productIdSet.isEmpty())
 		{
-			throw new NullPointerException("Order must contain atleast one product");
+			throw new IllegalArgumentException("Order must contain atleast one product");
 		}
 
 		// Order value over 50k
@@ -117,12 +117,12 @@ public class ECommerceService
 	{
 		if (product.getProductName() == null || product.getProductName().isEmpty())
 		{
-			throw new NullPointerException("Product name must not be empty or null");
+			throw new IllegalArgumentException("Product name must not be empty or null");
 		}
 
 		if (product.getProductDescription() == null || product.getProductDescription().isEmpty())
 		{
-			throw new NullPointerException("Product description must not be empty or null");
+			throw new IllegalArgumentException("Product description must not be empty or null");
 		}
 
 		if (product.getPrice() <= 0 || product.getPrice() >= MAX_COST)
