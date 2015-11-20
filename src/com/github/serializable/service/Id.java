@@ -38,7 +38,14 @@ public class Id
 		if (obj instanceof Id) 
 		{
 			Id otherId = (Id) obj;
-			return this.getId() == otherId.getId();
+			if ((hasId() == false) || (otherId.hasId() == false))
+			{
+				return super.equals(obj);
+			}
+			else
+			{
+				return this.getId() == otherId.getId();
+			}
 		}
 		return false;
 	}
