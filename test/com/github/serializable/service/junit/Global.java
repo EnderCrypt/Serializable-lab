@@ -37,10 +37,9 @@ public class Global // not a JUnit test file
 	{
 		char result;
 		if (capital)
-			result = (char) (65+Math.random()*(90-65));
+			return (char) (65+Math.random()*(90-65));
 		else
-			result = (char) (97+Math.random()*(122-97));
-		return result;
+			return (char) (97+Math.random()*(122-97));
 	}
 	
 	public static String generateString()
