@@ -6,6 +6,7 @@ import java.util.Set;
 import com.github.serializable.collection.storage.StorageRepository;
 import com.github.serializable.exceptions.InvalidIDException;
 import com.github.serializable.exceptions.PriceOutOfBoundsException;
+import com.github.serializable.exceptions.ServiceException;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
 import com.github.serializable.passwordvalidation.PasswordValidationService;
 import com.github.serializable.passwordvalidation.PasswordValidator;
@@ -53,7 +54,11 @@ public class ECommerceService
 		passwordValidator.validate(user.getPassword()); // will throw exceptions
 														// if password
 														// requirments arent met
-		return userRep.createUnit(user);
+		if(userRep.getUnitById(user.getId()) == null)
+		{
+			return userRep.createUnit(user);
+		}
+		return userRep.updateUnit(user);
 	}
 
 	public User[] addAll(User[] userList) throws PasswordRequirmentsNotMet
@@ -96,8 +101,13 @@ public class ECommerceService
 		{
 			throw new PriceOutOfBoundsException("Order price must be under " + MAX_COST);
 		}
-
-		return orderRep.createUnit(order);
+		
+		if(orderRep.getUnitById(order.getId()) == null)
+		{
+			return orderRep.createUnit(order);
+		}
+		//if order already exists we shall update it with passed argument
+		return orderRep.updateUnit(order);
 	}
 
 	public Order[] addAll(Order[] orderList)
@@ -127,10 +137,13 @@ public class ECommerceService
 
 		if (product.getPrice() <= 0 || product.getPrice() >= MAX_COST)
 		{
-			throw new PriceOutOfBoundsException("Price must be more than 0 or under " + MAX_COST);
+			throw new PriceOutOfBoundsException("Price must be more than 0.0 or under " + MAX_COST);
 		}
-
-		return prodRep.createUnit(product);
+		if(prodRep.getUnitById(product.getId()) == null)
+		{
+			return prodRep.createUnit(product);
+		}
+		return prodRep.updateUnit(product);
 	}
 
 	public Product[] addAll(Product[] productList)
@@ -143,6 +156,64 @@ public class ECommerceService
 			i++;
 		}
 		return newList;
+	}
+	
+	
+	public User getUserById(int id)
+	{
+		User userInStorage = userRep.getUnitById(id);
+		if(userInStorage == null)
+		{
+			throw new ServiceException("ID doesn't match any existing unit!");
+		}
+		return userInStorage;
+	}
+	
+	public Product getProductById(int id)
+	{
+		Product productInStorage = prodRep.getUnitById(id);
+		if(productInStorage == null)
+		{
+			throw new ServiceException("ID doesn't match any existing unit!");
+		}
+		return productInStorage;
+	}
+	
+	public Order getOrderById(int id)
+	{
+		Order orderInStorage = orderRep.getUnitById(id);
+		if(orderInStorage == null)
+		{
+			throw new ServiceException("ID doesn't match any existing unit!");
+		}
+		return orderInStorage;
+	}
+	
+	public void remove(User user)
+	{
+		if(userRep.getUnitById(user.getId()) == null)
+		{
+			throw new ServiceException("Specified user does not exist!");
+		}
+		userRep.deleteUnit(user);
+	}
+	
+	public void remove(Product product)
+	{
+		if(prodRep.getUnitById(product.getId()) == null)
+		{
+			throw new ServiceException("Specified product does not exist!");
+		}
+		prodRep.deleteUnit(product);
+	}
+	
+	public void remove(Order order)
+	{
+		if(orderRep.getUnitById(order.getId()) == null)
+		{
+			throw new ServiceException("Specified order does not exist!");
+		}
+		orderRep.deleteUnit(order);
 	}
 
 	/**
@@ -198,4 +269,5 @@ public class ECommerceService
 
 		return sb.toString();
 	}
+
 }

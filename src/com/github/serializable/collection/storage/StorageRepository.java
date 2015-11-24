@@ -10,7 +10,9 @@ public interface StorageRepository<T>
 	 */
 	public T createUnit(T unit);
 	/**
-	 * Updates by removing existing <tt>unit</tt> and re-adding the <tt>unit</tt>
+	 * Updates by removing existing <tt>unit</tt> and re-adding the <tt>unit</tt> to the repository
+	 * Compares argument with internal data by equals(). Keep in mind how your equals() method is
+	 * implemented!
 	 * @param <T> unit
 	 */
 	public T updateUnit(T unit);

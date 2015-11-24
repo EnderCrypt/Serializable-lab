@@ -26,8 +26,11 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 		{
 			unit.setId(nextId());
 		}
-		set.add(unit);
-		return unit;
+		if(set.add(unit))
+		{
+			return unit;
+		}
+		return null;
 	}
 
 	@Override
@@ -37,15 +40,19 @@ public class FileRepository<T extends Id> extends FileRepoAbstract<T> implements
 		{
 			set.remove(unit);
 			set.add(unit);
+			return unit;
 		}
-		return unit;
+		return null;
 	}
 
 	@Override
 	public T deleteUnit(T unit)
 	{
-		set.remove(unit);
-		return unit;
+		if(set.remove(unit))
+		{
+			return unit;
+		}
+		return null;
 	}
 	
 	@Override
