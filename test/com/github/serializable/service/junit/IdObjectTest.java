@@ -39,7 +39,8 @@ public class IdObjectTest
 	{
 		Product product = Global.generateProduct();
 		User user = Global.generateUser();
-		Order order = Global.generateFreeOrder(user);
+		Order order = Global.generateFreeOrder();
+		Global.eCom.tieOrder(order, user);
 		order.addProduct(product);
 		
 		assertEquals(order.getId(), -1);

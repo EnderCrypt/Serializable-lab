@@ -88,29 +88,29 @@ public class Global // not a JUnit test file
 		return user;
 	}
 	
-	public static Order generateFreeOrder(User user)
+	public static Order generateFreeOrder()
 	{
-		return new Order(user);
+		return new Order();
 	}
 	
 	public static Order generateOrder(User user)
 	{
-		Order order = generateFreeOrder(user);
+		Order order = generateFreeOrder();
 		Global.eCom.add(order);
 		return order;
 	}
 	
-	public static Order generatePopulatedOrder(User user, Product product)
+	public static Order generatePopulatedOrder(Product product)
 	{
-		Order order = new Order(user);
+		Order order = new Order();
 		order.addProduct(product);
 		Global.eCom.add(order);
 		return order;
 	}
 	
-	public static Order generatePopulatedOrder(User user, Product[] products)
+	public static Order generatePopulatedOrder(Product[] products)
 	{
-		Order order = new Order(user);
+		Order order = new Order();
 		for (Product product : products)
 		{
 			order.addProduct(product);

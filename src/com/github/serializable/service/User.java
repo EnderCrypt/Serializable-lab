@@ -73,6 +73,11 @@ public class User extends Id implements Serializable
 		return false;
 	}
 
+	public User setId(int id)
+	{
+		super.setId(id);
+		return this;
+	}
 	@Override
 	public String toString()
 	{

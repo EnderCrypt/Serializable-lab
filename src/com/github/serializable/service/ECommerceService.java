@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.serializable.collection.storage.StorageRepository;
-import com.github.serializable.exceptions.InvalidIDException;
 import com.github.serializable.exceptions.PriceOutOfBoundsException;
 import com.github.serializable.exceptions.ServiceException;
 import com.github.serializable.passwordvalidation.PasswordRequirmentsNotMet;
@@ -17,7 +16,7 @@ import com.github.serializable.passwordvalidation.validators.DefaultPasswordVali
  * fine, then saves using the selected repository type
  *
  * TODO: rewrite whole ECommerce. - all other files are complete as it is only
- * the ecommerce class that needs to handle logics -
+ * the eCommerce class that needs to handle logics -
  *
  */
 public class ECommerceService
@@ -61,34 +60,37 @@ public class ECommerceService
 		return userRep.updateUnit(user);
 	}
 
-	public User[] addAll(User[] userList) throws PasswordRequirmentsNotMet
+	public void addUserSet(Set<User> userSet) throws PasswordRequirmentsNotMet
 	{
-		User[] newList = new User[userList.length];
-		int i = 0;
-		for (User user : userList)
+		if(userSet.isEmpty())
 		{
-			newList[i] = add(user);
-			i++;
+			throw new IllegalArgumentException("Cannot instantiate over empty set!");
 		}
-		return newList;
+		for(User user : userSet)
+		{
+			add(user);
+		}
 	}
 
+	/**
+	 * Adds the order to the users internal list of orderId's
+	 * @param order
+	 * @param user
+	 */
+	public void tieOrder(Order order, User user)
+	{
+		user.addOrder(order);
+	}
 	// --Orders
 	public Order add(Order order)
 	{
-		// add order to orderRep
-		/*
-		 * check to be made: - order cannot be created with no user - order
-		 * cannot be created with no products contained - order cannot be
-		 * created with a total value of >50k - order cannot be created with
-		 * products without ID
-		 */
-
-		// Order with no user ID
-		if (order.getBuyerId() == -1)
-		{
-			throw new InvalidIDException("Order is missing valid buyer ID");
-		}
+//
+		//Order should be created without user, and the eCom is tasked to tie an order without owner to a user.
+//		// Order with no user ID
+//		if (order.getBuyerId() == -1)
+//		{
+//			throw new InvalidIDException("Order is missing a valid buyer ID");
+//		}
 
 		// Order with empty set of products
 		if (order.productIdSet == null || order.productIdSet.isEmpty())
@@ -110,16 +112,16 @@ public class ECommerceService
 		return orderRep.updateUnit(order);
 	}
 
-	public Order[] addAll(Order[] orderList)
+	public void addOrderSet(Set<Order> orderSet)
 	{
-		Order[] newList = new Order[orderList.length];
-		int i = 0;
-		for (Order order : orderList)
+		if(orderSet.isEmpty())
 		{
-			newList[i] = add(order);
-			i++;
+			throw new IllegalArgumentException("Cannot instantiate over empty set!");
 		}
-		return newList;
+		for(Order order : orderSet)
+		{
+			add(order);
+		}
 	}
 
 	// --Products
@@ -146,18 +148,20 @@ public class ECommerceService
 		return prodRep.updateUnit(product);
 	}
 
-	public Product[] addAll(Product[] productList)
+	/**Verifies and proceeds to add <tt>Set</tt> of <tt>Product</tt> to the appropriate repository.
+	 * @param prodSet
+	 */
+	public void addProdSet(Set<Product> prodSet)
 	{
-		Product[] newList = new Product[productList.length];
-		int i = 0;
-		for (Product product : newList)
+		if(prodSet.isEmpty())
 		{
-			newList[i] = add(product);
-			i++;
+			throw new IllegalArgumentException("Cannot instantiate over empty set!");
 		}
-		return newList;
+		for(Product product : prodSet)
+		{
+			add(product);
+		}
 	}
-	
 	
 	public User getUserById(int id)
 	{
@@ -244,12 +248,26 @@ public class ECommerceService
 	 */
 	public Set<Order> getAllOrders(User user)
 	{
+		if(user.getOrderIdSet().isEmpty())
+		{
+			throw new ServiceException("User " + user.toString() + " has no orders on record");
+		}
 		Set<Order> orders = new HashSet<>();
 		for(int orderId : user.getOrderIdSet())
 		{
 			orders.add(orderRep.getUnitById(orderId));
 		}
-		return orders; 
+		return orders;
+	}
+	
+	public Set<Product> getAllProducts()
+	{
+		return prodRep.getAllUnits();
+	}
+	
+	public Set<User> getAllUsers()
+	{
+		return userRep.getAllUnits();
 	}
 
 	public String toString()

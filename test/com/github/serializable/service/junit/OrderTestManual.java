@@ -43,12 +43,13 @@ public class OrderTestManual
 	{
 		rule.expect(PriceOutOfBoundsException.class);
 		
-		User user = new User("_","_","_");
+		User user = new User("_","A_12","_");
 		eCom.add(user);
-		Product product = new Product("_", "_", 50000);
+		Product product = new Product("_", "A_12", 50000);
 		eCom.add(product);
 		
-		Order order = new Order(user);
+		Order order = new Order();
+		eCom.tieOrder(order, user);
 		order.addProduct(product);
 		
 		Global.eCom.add(order);
@@ -57,9 +58,9 @@ public class OrderTestManual
 	@Test
 	public void verifyThatTotalCostForOrderIsCorrect() throws PasswordRequirmentsNotMet
 	{
-		User user = new User("_","_","_");
+		User user = new User("_","A_12","_");
 		eCom.add(user);
-		Order order = new Order(user);
+		Order order = new Order();
 		double expectedCost = 0;
 		for (int i=0;i<100;i++)
 		{

@@ -8,9 +8,10 @@ public class Id
 	{
 		return id;
 	}
-	public void setId(int id)
+	public Object setId(int id) //so the child object can override and decorate constructor. Check ECommerceServiceTest for user dec.
 	{
 		this.id = id;
+		return this;
 	}
 	
 	public boolean hasId()

@@ -2,6 +2,10 @@ package com.github.serializable.service.mocktest;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.hamcrest.core.IsEqual.*;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,8 +41,10 @@ public class ECommerceServiceTest
 	private String validUsername = "JohnDoe";
 	private String validPassword = "A_12";
 	private String validEmail = "john@doe.anon";
+	//valid input objects
 	private Product validProduct = new Product("fallout4", "sämsta spelet euw", 10.0);
-
+	private User validUser = new User(validUsername, validPassword, validEmail).setId(0);
+	
 	
 	//password requirements:
 	//at least 1 capital letter, at least 2 numbers and at least 1 special char
@@ -107,9 +113,6 @@ public class ECommerceServiceTest
 	@Test
 	public void canDeleteProduct()
 	{
-		//TODO: make check to see if object really got deleted and not just if the repository invoked the method
-		//setup mock object to make sure that whichever object calling prodRep.getUnitById (eCom.remove())
-		//shall assume validProduct is returned
 		when(prodRepMock.getUnitById(validProduct.getId())).thenReturn(validProduct);
 		eCom.remove(validProduct);
 		
@@ -133,19 +136,64 @@ public class ECommerceServiceTest
 		validProduct = new Product(validProduct.getProductName(), validProduct.getProductDescription(), 15.0);
 		when(prodRepMock.getUnitById(validProduct.getId())).thenReturn(validProduct);
 		when(prodRepMock.updateUnit(validProduct)).thenReturn(validProduct);
-		Product updatedProduct = eCom.add(validProduct);
+		Product updatedProduct = eCom.add(validProduct);//calls updateUnit
 		
 		assertThat(updatedProduct.getPrice(), equalTo(15.0));
 		
-		//verify eCom called on updateUnit because unit expected to have already been created
+		//verify eCom called on updateUnit because unit was expected to already have been created
 		verify(prodRepMock).updateUnit(validProduct);
 	}
-	
 	@Test
 	public void canRetrieveAllProducts()
 	{
-		//TODO: make sure getAllProducts method exists in eCom and invokes getAllUnits from the specified
-		//		(mocked) repository
+		Set<Product> prodSet = new HashSet<>();
+		prodSet.add(validProduct);
+		eCom.addProdSet(prodSet);
+		//initial verification
+		verify(prodRepMock).createUnit(validProduct);
+		
+		//mock initiate: prodRep will return prodSet
+		when(prodRepMock.getAllUnits()).thenReturn(prodSet);
+		for(Product product : eCom.getAllProducts())
+		{
+			assertThat(product, equalTo(validProduct));
+		}
+		
+		verify(prodRepMock).getAllUnits();
+	}
+	
+	@Test
+	public void canRetrieveAllOrdersFromUser()
+	{
+		/*
+		 * work-flow:
+		 * - add an order to eCommerce, check that it is indeed added.
+		 * - retrieve an order from eCommerce (through repository) by telling the mocked repository to return an object.
+		 * - call method eCom.getAllOrders(
+		 */
+		Order validOrder = new Order();
+		validOrder.addProduct(validProduct);
+		eCom.add(validOrder);
+		eCom.tieOrder(validOrder, validUser);
+		
+		//initial verification
+		verify(orderRepMock).createUnit(validOrder);
+				
+		//mock setup: whenever a method (that uses validOrder's ID) is invoked, return validOrder.
+		//anyInt() due to the vast number of orderIds a user can have
+		when(orderRepMock.getUnitById(anyInt())).thenReturn(validOrder);
+		if(eCom.getAllOrders(validUser).contains(validOrder))
+		{
+			assertTrue(validOrder.getProductIdSet().contains(validProduct.getId()));
+		}
+		else
+		{
+			fail("ECommerce.getAllOrders is empty or does not contain the ongoing stubbing object (validOrder)!");
+		}
+		
+		//verify that eCom gets the correct data from the orderRepMock.
+		//1st invocation by eCom.add
+		verify(orderRepMock, times(2)).getUnitById(anyInt());
 	}
 
 }

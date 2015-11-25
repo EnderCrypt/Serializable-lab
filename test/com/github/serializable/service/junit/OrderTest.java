@@ -32,7 +32,7 @@ public class OrderTest
 		Product product = new Product(Global.generateString(), Global.generateString(), 50000);
 		Global.eCom.add(product);
 		
-		Order order = Global.generateFreeOrder(user);
+		Order order = Global.generateFreeOrder();
 		order.addProduct(product);
 		
 		Global.eCom.add(order);
@@ -42,7 +42,8 @@ public class OrderTest
 	public void verifyThatTotalCostForOrderIsCorrect()
 	{
 		User user = Global.generateUser();
-		Order order = Global.generateFreeOrder(user);
+		Order order = Global.generateFreeOrder();
+		Global.eCom.tieOrder(order, user);
 		double expectedCost = 0;
 		for (int i=0;i<100;i++)
 		{
