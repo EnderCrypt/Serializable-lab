@@ -169,7 +169,7 @@ public class ECommerceServiceTest
 		 * work-flow:
 		 * - add an order to eCommerce, check that it is indeed added.
 		 * - retrieve an order from eCommerce (through repository) by telling the mocked repository to return an object.
-		 * - call method eCom.getAllOrders(
+		 * - call method eCom.getAllOrders(validUser) and ensure it returns a validOrder through orderRep.getUnitByID()
 		 */
 		Order validOrder = new Order();
 		validOrder.addProduct(validProduct);
@@ -192,7 +192,7 @@ public class ECommerceServiceTest
 		}
 		
 		//verify that eCom gets the correct data from the orderRepMock.
-		//1st invocation by eCom.add
+		//1st invocation by eCom.add(), 2nd by eCom.getAllOrders()
 		verify(orderRepMock, times(2)).getUnitById(anyInt());
 	}
 
