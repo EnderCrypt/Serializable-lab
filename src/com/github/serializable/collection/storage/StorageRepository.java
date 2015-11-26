@@ -2,7 +2,9 @@ package com.github.serializable.collection.storage;
 
 import java.util.Set;
 
-public interface StorageRepository<T> 
+import com.github.serializable.service.Id;
+
+public interface StorageRepository<T extends Id> 
 {
 	/**
 	 * Creates <tt>unit</tt> with specified type (by implementation) and adds it to the specified repository.
