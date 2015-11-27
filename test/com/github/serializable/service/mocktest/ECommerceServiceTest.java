@@ -182,14 +182,9 @@ public class ECommerceServiceTest
 		//mock setup: whenever a method (that uses validOrder's ID) is invoked, return validOrder.
 		//anyInt() due to the vast number of orderIds a user can have
 		when(orderRepMock.getUnitById(anyInt())).thenReturn(validOrder);
-		if(eCom.getAllOrders(validUser).contains(validOrder))
-		{
-			assertTrue(validOrder.getProductIdSet().contains(validProduct.getId()));
-		}
-		else
-		{
-			fail("ECommerce.getAllOrders is empty or does not contain the ongoing stubbing object (validOrder)!");
-		}
+
+		assertTrue(eCom.getAllOrders(validUser).contains(validOrder));
+		assertTrue(validOrder.getProductIdSet().contains(validProduct.getId()));
 		
 		//verify that eCom gets the correct data from the orderRepMock.
 		//1st invocation by eCom.add(), 2nd by eCom.getAllOrders()
